@@ -1,0 +1,12 @@
+[
+    {
+      "modid": "sevtweaks",
+      "name": "SevTweaks",
+      "description": "Adds tweaks/mod compact when CrT does not support it.",
+      "version": "${version}",
+      "mcversion": "${mcversion}",
+      "url": "",
+      "updateUrl": "",
+      "authorList": ["artdude543"]
+    }
+]

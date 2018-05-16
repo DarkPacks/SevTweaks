@@ -1,0 +1,71 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+
+ext.artifact_version = 'NFG'
+artifact_version = "${mod_version}-${System.getenv().TRAVIS_BUILD_ID}"
+version = "${artifact_version}"
+group= "tv.darkosto.sevtweaks"
+archivesBaseName = "sevtweaks"
+
+sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+minecraft {
+    version = "${minecraft_version}-${forge_version}"
+    runDir = "run"
+    mappings = "snapshot_20171003"
+	
+	replaceIn "References.java"
+    replace "@VERSION@", project.version
+}
+
+dependencies {
+	// Mantle, Natura
+	deobfCompile "slimeknights.mantle:Mantle:1.12-+:deobf"
+	deobfCompile "com.progwml6.natura:natura:1.12-+"
+	// Immersive Engineering
+    deobfCompile "blusunrize:ImmersiveEngineering:0.12-+:deobf"
+	// JEI
+	deobfCompile "mezz.jei:jei_1.12.2:4.9.1.187"
+}
+
+repositories {
+    // Immersive Engineering
+    maven {
+        url 'http://blamejared.com/maven'
+    }
+	// JEI, Natura, Mantle, TiCon
+	maven {
+        url "http://dvs1.progwml6.com/files/maven"
+    }
+}
+
+processResources {
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+        
+    // copy everything else except the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
