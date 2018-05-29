@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 ext.artifact_version = 'NFG'
-artifact_version = "${mod_version}-${System.getenv().TRAVIS_BUILD_ID}"
+artifact_version = "${mod_version}-${System.getenv().BUILD_NUMBER}"
 version = "${artifact_version}"
 group= "tv.darkosto.sevtweaks"
 archivesBaseName = "sevtweaks"
