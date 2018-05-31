@@ -19,7 +19,6 @@ import tv.darkosto.sevtweaks.common.events.CanceledEvents;
 
 @Mod(modid = References.modID, name = References.modName, version = References.modVersion,
         acceptedMinecraftVersions = References.mcVersion, dependencies = "after:guideapi@[1.12-2.1.4-57,];after:gamestages@[2.0.91,]")
-@Mod.EventBusSubscriber(modid = References.modID)
 public class SevTweaks {
 
     public static Logger logger;
