@@ -1,9 +1,9 @@
-package tv.darkosto.sevtweaks.compat;
+package tv.darkosto.sevtweaks.common.compat;
 
 import net.minecraftforge.fml.common.Loader;
 import tv.darkosto.sevtweaks.SevTweaks;
-import tv.darkosto.sevtweaks.compat.modules.Natura;
-import tv.darkosto.sevtweaks.compat.modules.Rustic;
+import tv.darkosto.sevtweaks.common.compat.modules.Natura;
+import tv.darkosto.sevtweaks.common.compat.modules.Rustic;
 
 import java.util.HashMap;
 import java.util.HashSet;

@@ -1,4 +1,4 @@
-package tv.darkosto.sevtweaks.compat;
+package tv.darkosto.sevtweaks.common.compat;
 
 public abstract class ICompat {
     public abstract void preInit();

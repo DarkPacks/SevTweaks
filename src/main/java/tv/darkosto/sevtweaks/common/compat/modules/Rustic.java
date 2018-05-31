@@ -1,4 +1,4 @@
-package tv.darkosto.sevtweaks.compat.modules;
+package tv.darkosto.sevtweaks.common.compat.modules;
 
 import blusunrize.immersiveengineering.api.tool.BelljarHandler;
 import net.minecraft.block.Block;
@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
-import tv.darkosto.sevtweaks.compat.ICompat;
+import tv.darkosto.sevtweaks.common.compat.ICompat;
 
 public class Rustic extends ICompat {
     @Override

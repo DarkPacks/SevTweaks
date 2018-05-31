@@ -31,23 +31,44 @@ minecraft {
 }
 
 dependencies {
-	// Mantle, Natura
-	deobfCompile "slimeknights.mantle:Mantle:1.12-+:deobf"
-	deobfCompile "com.progwml6.natura:natura:1.12-+"
-	// Immersive Engineering
-    deobfCompile "blusunrize:ImmersiveEngineering:0.12-+:deobf"
-	// JEI
-	deobfCompile "mezz.jei:jei_1.12.2:4.9.1.187"
+    // CraftTweaker
+    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.8.470"
+    // Immersive Engineering
+    deobfCompile "blusunrize:ImmersiveEngineering:0.12-82-389:deobf"
+    // JEI
+    deobfCompile "mezz.jei:jei_1.12.2:4.9.1.187"
+    // Guide-API
+    deobfCompile "info.amerifrance.guideapi:Guide-API:1.12-2.1.4-57"
+    // GameStages
+    deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.0.91:deobf"
+    // ItemStages
+    deobfCompile "net.darkhax.itemstages:ItemStages-1.12.2:2.0.35:deobf"
+    // BetterWithMods
+    deobfCompile "betterwithmods:BetterWithMods:1.12-2.1.8-477"
+    // BookShelf
+    deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:2.3.+"
 }
 
 repositories {
-    // Immersive Engineering
+    // Immersive Engineering / CraftTweaker
     maven {
         url 'http://blamejared.com/maven'
     }
-	// JEI, Natura, Mantle, TiCon
-	maven {
-        url "http://dvs1.progwml6.com/files/maven"
+    // JEI, Natura, Mantle, TiCon
+    maven {
+        url 'http://dvs1.progwml6.com/files/maven'
+    }
+    // Guide-API
+    maven {
+        url 'http://tehnut.info/maven'
+    }
+    // GameStages, ItemStages
+    maven {
+        url 'https://maven.mcmoddev.com'
+    }
+    // MCMultiPart
+    maven {
+        url "http://maven.amadornes.com/"
     }
 }
 
@@ -58,7 +79,8 @@ processResources {
 
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
+		include '**/*.info'
+        include '**/*.properties'
                 
         // replace version and mcversion
         expand 'version':project.version, 'mcversion':project.minecraft.version
@@ -66,6 +88,7 @@ processResources {
         
     // copy everything else except the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+        exclude '**/*.info'
+        exclude '**/*.properties'
     }
 }
