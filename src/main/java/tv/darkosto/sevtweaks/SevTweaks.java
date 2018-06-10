@@ -13,8 +13,6 @@ import tv.darkosto.sevtweaks.common.command.CommandSevTweaks;
 import tv.darkosto.sevtweaks.common.gamestages.GameStageScoreboard;
 import tv.darkosto.sevtweaks.common.util.References;
 import tv.darkosto.sevtweaks.common.compat.Compat;
-import tv.darkosto.sevtweaks.common.compat.modules.BetterWithMods;
-import tv.darkosto.sevtweaks.common.config.Configuration;
 import tv.darkosto.sevtweaks.common.events.CanceledEvents;
 
 @Mod(modid = References.modID, name = References.modName, version = References.modVersion,
@@ -29,9 +27,6 @@ public class SevTweaks {
         logger = event.getModLog();
         Compat.compactPreInit();
         MinecraftForge.EVENT_BUS.register(CanceledEvents.class);
-        if (Loader.isModLoaded("betterwithmods") && Configuration.creeperItemShead.shouldShead) {
-            MinecraftForge.EVENT_BUS.register(BetterWithMods.class);
-        }
         if (Loader.isModLoaded("gamestages")) {
             MinecraftForge.EVENT_BUS.register(GameStageScoreboard.class);
         }

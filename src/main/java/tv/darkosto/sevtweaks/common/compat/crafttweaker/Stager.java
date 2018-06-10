@@ -1,5 +1,6 @@
 package tv.darkosto.sevtweaks.common.compat.crafttweaker;
 
+import com.blamejared.recipestages.handlers.Recipes;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.annotations.ModOnly;
 import crafttweaker.annotations.ZenRegister;
@@ -41,14 +42,14 @@ public class Stager {
         return null;
     }
 
-    @ZenMethod
-    public static String getContainerStage(String container) {
-        if (container == null || container.length() < 1) {
+    // TODO: Expose this to Zen?
+    public static String getTypeStage(String value) {
+        if (value == null || value.length() < 1) {
             return null;
         }
 
         for (Stage stage : stageMap.values()) {
-            if (stage.isStaged(container)) {
+            if (stage.isStaged(value)) {
                 return stage.getStage();
             }
         }
@@ -57,8 +58,14 @@ public class Stager {
     }
 
     @ZenMethod
-    public static String getRecipeNameStage(String container) {
-        return getContainerStage(container);
+    public static String getDimensionStage(int dimension) {
+        for (Stage stage : stageMap.values()) {
+            if (stage.isStaged(dimension)) {
+                return stage.getStage();
+            }
+        }
+
+        return null;
     }
 
     @ZenMethod
@@ -68,7 +75,12 @@ public class Stager {
 
     @ZenMethod
     public static boolean isStaged(String string) {
-        return getContainerStage(string) != null;
+        return getTypeStage(string) != null;
+    }
+
+    @ZenMethod
+    public static boolean isStaged(int dimension) {
+        return getDimensionStage(dimension) != null;
     }
 
     @ZenMethod
@@ -96,7 +108,7 @@ public class Stager {
         CraftTweakerAPI.logInfo("[Stage Duplicate] Starting duplicate checks....");
 
         Map<String, List<String>> duplicateRecipes = new HashMap<>();
-        Map<String, List<String>> duplicateContainers = new HashMap<>();
+        Map<String, List<String>> duplicateDimensions = new HashMap<>();
         Map<IIngredient, List<String>> duplicateIngredient = new HashMap<>();
 
         for (Stage currStage : stageMap.values()) {
@@ -104,21 +116,64 @@ public class Stager {
                 if (currStage.getStage().equals(checkStage.getStage())) {
                     continue;
                 }
-                Helper.getDuplicates(duplicateRecipes, currStage.getStage(), currStage.getStagedRecipes(), checkStage.getStagedRecipes());
-                Helper.getDuplicates(duplicateContainers, currStage.getStage(), currStage.getStagedContainers(), checkStage.getStagedContainers());
+                Helper.getDuplicates(duplicateRecipes, currStage.getStage(), currStage.getStagedTypes(Types.RECIPE_NAME), checkStage.getStagedTypes(Types.RECIPE_NAME));
+                Helper.getDuplicates(duplicateDimensions, currStage.getStage(), currStage.getStagedTypes(Types.DIMENSION), checkStage.getStagedTypes(Types.DIMENSION));
                 Helper.getIngredientDuplicates(duplicateIngredient, currStage.getStage(), currStage.getStagedIngredients(), checkStage.getStagedIngredients());
             }
         }
 
         duplicateRecipes.forEach((recipe, stages) -> CraftTweakerAPI.logError(String.format("[Stage Duplicate] Found a duplicate recipe stage for `%s` for stages %s", recipe, stages)));
-        duplicateContainers.forEach((recipe, stages) -> CraftTweakerAPI.logError(String.format("[Stage Duplicate] Found a duplicate container stage for `%s` for stages %s", recipe, stages)));
-        duplicateIngredient.forEach((recipe, stages) -> CraftTweakerAPI.logError(String.format("[Stage Duplicate] Found a duplicate ingredient stage for `%s` for stages %s", recipe, stages)));
+        duplicateDimensions.forEach((dimension, stages) -> CraftTweakerAPI.logError(String.format("[Stage Duplicate] Found a duplicate dimension stage for `%s` for stages %s", dimension, stages)));
+        duplicateIngredient.forEach((ingredient, stages) -> CraftTweakerAPI.logError(String.format("[Stage Duplicate] Found a duplicate ingredient stage for `%s` for stages %s", ingredient, stages)));
 
         CraftTweakerAPI.logInfo("[Stage Duplicate] Completed duplicate checks!");
     }
 
     @ZenMethod
     public static void buildAll() {
-        stageMap.forEach((s, stage) -> stage.build());
+        Map<Types, Map<String, List<String>>> stagedTypes = new HashMap<>();
+        stagedTypes.put(Types.CONTAINER, new HashMap<>());
+        stagedTypes.put(Types.PACKAGE, new HashMap<>());
+
+        stageMap.forEach((s, stage) -> {
+            getStagedTypes(Types.CONTAINER, stagedTypes.get(Types.CONTAINER), stage);
+            getStagedTypes(Types.PACKAGE, stagedTypes.get(Types.PACKAGE), stage);
+
+            stage.build();
+        });
+
+        // Stage the Containers based on the built stage mapping.
+        Map<String, List<String>> stagedContainers = stagedTypes.get(Types.CONTAINER);
+        stagedContainers.forEach((container, stages) -> {
+            String[] forStages = new String[]{};
+            forStages = stages.toArray(forStages);
+
+            Recipes.setContainerStage(container, forStages);
+        });
+
+        // Stage the Packages based on the built stage mapping.
+        Map<String, List<String>> stagedPackages = stagedTypes.get(Types.PACKAGE);
+        stagedPackages.forEach((packageName, stages) -> {
+            String[] forStages = new String[]{};
+            forStages = stages.toArray(forStages);
+
+            Recipes.setPackageStage(packageName, forStages);
+        });
+    }
+
+    /**
+     *
+     */
+    private static void getStagedTypes(Types type, Map<String, List<String>> stringListMap, Stage stage) {
+        for (StagedType stagedType : stage.getStagedTypes(type)) {
+            if (stringListMap.containsKey(stagedType.getValue())) {
+                List<String> currentStages = stringListMap.get(stagedType.getValue());
+                currentStages.add(stage.getStage());
+            } else {
+                List<String> stages = new ArrayList<>();
+                stages.add(stage.getStage());
+                stringListMap.put(stagedType.getValue(), stages);
+            }
+        }
     }
 }

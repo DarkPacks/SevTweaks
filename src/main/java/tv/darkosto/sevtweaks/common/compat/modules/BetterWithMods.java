@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import tv.darkosto.sevtweaks.common.config.Configuration;
@@ -19,6 +20,9 @@ public class BetterWithMods extends ICompat {
 
     @Override
     public void preInit() {
+        if (!Configuration.creeperItemShead.shouldShead) {
+            MinecraftForge.EVENT_BUS.register(this);
+        }
     }
 
     @Override
@@ -44,7 +48,7 @@ public class BetterWithMods extends ICompat {
         if (Configuration.creeperItemShead.sheadItem.length() < 0) {
             return;
         }
-        if (Configuration.creeperItemShead.shouldShead && !world.isRemote && entity instanceof EntityShearedCreeper && --timeUntilNextDrop <= 0) {
+        if (!world.isRemote && entity instanceof EntityShearedCreeper && --timeUntilNextDrop <= 0) {
             String[] item = Configuration.creeperItemShead.sheadItem.split(":");
             Item registryObject = Item.REGISTRY.getObject(new ResourceLocation(item[0], item[1]));
             if (registryObject == null) {

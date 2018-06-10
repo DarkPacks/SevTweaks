@@ -12,10 +12,8 @@ import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import tv.darkosto.sevtweaks.common.util.Helper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @ZenRegister
 @ModOnly("itemstages")
@@ -23,8 +21,7 @@ import java.util.Map;
 public class Stage {
     private String stage;
     private Map<IIngredient, StagedIngredient> stagedIngredients = new HashMap<>();
-    private List<String> stagedContainers = new ArrayList<>();
-    private List<String> stagedRecipes = new ArrayList<>();
+    private List<StagedType> stagedTypes = new ArrayList<>();
 
     public Stage(String stage) {
         this.stage = stage;
@@ -41,13 +38,12 @@ public class Stage {
     }
 
     @ZenMethod
-    public List<String> getStagedContainers() {
-        return stagedContainers;
+    public List<StagedType> getStagedTypes() {
+        return stagedTypes;
     }
 
-    @ZenMethod
-    public List<String> getStagedRecipes() {
-        return stagedRecipes;
+    public List<StagedType> getStagedTypes(Types type) {
+        return stagedTypes.stream().filter(t -> t.getType() == type).collect(Collectors.toList());
     }
 
     @ZenMethod
@@ -75,8 +71,11 @@ public class Stage {
 
     @ZenMethod
     public String getContainerStage(String container) {
-        if (stagedContainers.contains(container.toLowerCase())) {
-            return this.getStage();
+        List<StagedType> stagedContainers = getStagedTypes(Types.CONTAINER);
+        for (StagedType stagedContainer : stagedContainers) {
+            if (stagedContainer.getValue().equalsIgnoreCase(container)) {
+                return this.getStage();
+            }
         }
 
         return null;
@@ -84,8 +83,23 @@ public class Stage {
 
     @ZenMethod
     public String getRecipeNameStage(String container) {
-        if (stagedRecipes.contains(container.toLowerCase())) {
-            return this.getStage();
+        List<StagedType> stagedRecipes = getStagedTypes(Types.RECIPE_NAME);
+        for (StagedType stagedRecipe : stagedRecipes ) {
+            if (stagedRecipe.getValue().equalsIgnoreCase(container)) {
+                return this.getStage();
+            }
+        }
+
+        return null;
+    }
+
+    @ZenMethod
+    public String getDimensionStage(int dimension) {
+        List<StagedType> stagedDimensions = getStagedTypes(Types.DIMENSION);
+        for (StagedType stagedDimension : stagedDimensions ) {
+            if (stagedDimension.getValue().equalsIgnoreCase(Integer.toString(dimension))) {
+                return this.getStage();
+            }
         }
 
         return null;
@@ -111,10 +125,16 @@ public class Stage {
         return this.getRecipeNameStage(name) != null;
     }
 
+    @ZenMethod
+    public boolean isStaged(int dimension) {
+        return this.getDimensionStage(dimension) != null;
+    }
+
     /**
      * Set the stage on the IItemStack given.
      */
     @ZenMethod
+    @SuppressWarnings("UnusedReturnValue")
     public Stage addIngredient(IIngredient ingredient, @Optional(valueBoolean = true) boolean recipeStage) {
         if (ingredient == null) {
             CraftTweakerAPI.logError(String.format("[Stage %s] Ingredient can not be null!", this.getStage()));
@@ -134,65 +154,53 @@ public class Stage {
     @ZenMethod
     public Stage addIngredients(IIngredient[] ingredients, @Optional(valueBoolean = true) boolean recipeStage) {
         for (IIngredient ingredient : ingredients) {
-            if (ingredient == null) {
-                CraftTweakerAPI.logError(String.format("[Stage %s] Ingredient can not be null!", this.getStage()));
-
-                continue;
-            }
-            if (stagedIngredients.containsKey(ingredient)) {
-                CraftTweakerAPI.logError(String.format("[Stage %s] Failed to add the ingredient `%s` due to already being added.", this.getStage(), ingredient.toString()));
-
-                continue;
-            }
-            stagedIngredients.put(ingredient, new StagedIngredient(ingredient, recipeStage));
+            addIngredient(ingredient, recipeStage);
         }
+
+        return this;
+    }
+
+    @ZenMethod
+    public Stage addDimension(int dimension) {
+        stageType(Types.DIMENSION, Integer.toString(dimension));
 
         return this;
     }
 
     @ZenMethod
     public Stage addContainer(String container) {
-        if (container == null || container.length() < 1) {
-            CraftTweakerAPI.logError(String.format("[Stage %s] Container can not be null or empty!", this.getStage()));
+        stageType(Types.CONTAINER, container);
 
-            return this;
-        }
-        if (stagedContainers.contains(container)) {
-            CraftTweakerAPI.logError(String.format("[Stage %s] Failed to add the container `%s` due to already being added.", this.getStage(), container));
+        return this;
+    }
 
-            return this;
-        }
-        stagedContainers.add(container.toLowerCase());
+    @ZenMethod
+    public Stage addPackage(String container) {
+        stageType(Types.PACKAGE, container);
 
         return this;
     }
 
     @ZenMethod
     public Stage addRecipeName(String recipeName) {
-        if (recipeName == null || recipeName.length() < 1) {
-            CraftTweakerAPI.logError(String.format("[Stage %s] Recipe name can not be null or empty!", this.getStage()));
-
-            return this;
-        }
-        String checkedRecipeName = Helper.validateRecipeName(recipeName);
-        if (checkedRecipeName == null) {
+        if (Helper.validateRecipeName(recipeName) == null) {
             CraftTweakerAPI.logError(String.format("[Stage %s] Recipe name `%s` is not valid! Example: minecraft:boat", this.getStage(), recipeName));
 
             return this;
         }
-        if (stagedRecipes.contains(checkedRecipeName)) {
-            CraftTweakerAPI.logError(String.format("[Stage %s] Failed to add the recipe name `%s` due to already being added.", this.getStage(), checkedRecipeName));
 
-            return this;
-        }
-        stagedRecipes.add(checkedRecipeName.toLowerCase());
-
-        CraftTweakerAPI.logInfo(stagedRecipes.toString());
+        stageType(Types.RECIPE_NAME, recipeName);
 
         return this;
     }
 
+    public void stageType(Types type, String value) {
+        // TODO: Check if it was already added to this Stage.
+        stagedTypes.add(new StagedType(value, type));
+    }
+
     @ZenMethod
+    @SuppressWarnings("UnusedReturnValue")
     public Stage build() {
         for (Map.Entry<IIngredient, StagedIngredient> stagedIngredient : stagedIngredients.entrySet()) {
             StagedIngredient ingredient = stagedIngredient.getValue();
@@ -201,8 +209,15 @@ public class Stage {
                 Recipes.setRecipeStage(getStage(), ingredient.getIngredient());
             }
         }
-        for (String stagedRecipe : stagedRecipes) {
-            Recipes.setRecipeStage(getStage(), stagedRecipe);
+
+        for (StagedType stagedType : stagedTypes) {
+            switch (stagedType.getType()) {
+                case RECIPE_NAME:
+                    Recipes.setRecipeStage(getStage(), stagedType.getValue());
+                    break;
+                case DIMENSION:
+                    break;
+            }
         }
 
         return this;

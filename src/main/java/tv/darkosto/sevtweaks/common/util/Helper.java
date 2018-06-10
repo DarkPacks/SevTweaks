@@ -2,14 +2,18 @@ package tv.darkosto.sevtweaks.common.util;
 
 import crafttweaker.api.item.IIngredient;
 import tv.darkosto.sevtweaks.common.compat.crafttweaker.StagedIngredient;
+import tv.darkosto.sevtweaks.common.compat.crafttweaker.StagedType;
 
 import java.util.*;
 import java.util.regex.Pattern;
 
 public class Helper {
-    public static void getDuplicates(Map<String, List<String>> duplicates, String stage, List<String> currStage, List<String> checkStage) {
-        Collection<String> similar = new HashSet<>(currStage);
-        similar.retainAll(checkStage);
+    public static void getDuplicates(Map<String, List<String>> duplicates, String stage, List<StagedType> currStage, List<StagedType> checkStage) {
+        Collection<String> similar = new HashSet<>();
+        Collection<String> checkSimilar = new HashSet<>();
+        currStage.forEach((stagedType -> similar.add(stagedType.getValue())));
+        checkStage.forEach((stagedType -> checkSimilar.add(stagedType.getValue())));
+        similar.retainAll(checkSimilar);
 
         for (String s : similar) {
             List<String> list = new ArrayList<>();

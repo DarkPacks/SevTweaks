@@ -23,6 +23,7 @@ public class Configuration {
     public static class ShearedCreeperItemShead {
         @Config.Comment("Should the Creeper drop the item defined.")
         @Config.Name("Enable Creeper Shead")
+        @Config.RequiresMcRestart
         public boolean shouldShead = false;
 
         @Config.Comment("The item that the Creeper should shead after X time.")
