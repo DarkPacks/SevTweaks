@@ -2,10 +2,10 @@ package tv.darkosto.sevtweaks.common.compat.crafttweaker;
 
 import com.blamejared.recipestages.handlers.Recipes;
 import crafttweaker.CraftTweakerAPI;
-import crafttweaker.annotations.ModOnly;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
 import crafttweaker.mc1120.oredict.MCOreDictEntry;
+import net.darkhax.dimstages.compat.crt.DimensionStagesCrT;
 import net.darkhax.itemstages.compat.crt.ItemStagesCrT;
 import stanhebben.zenscript.annotations.Optional;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -16,7 +16,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @ZenRegister
-@ModOnly("itemstages")
 @ZenClass("mods.sevtweaks.stager.Stage")
 public class Stage {
     private String stage;
@@ -216,6 +215,7 @@ public class Stage {
                     Recipes.setRecipeStage(getStage(), stagedType.getValue());
                     break;
                 case DIMENSION:
+                    DimensionStagesCrT.addDimensionStage(getStage(), Integer.parseInt(stagedType.getValue()));
                     break;
             }
         }

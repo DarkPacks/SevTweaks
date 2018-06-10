@@ -2,7 +2,6 @@ package tv.darkosto.sevtweaks.common.compat.crafttweaker;
 
 import com.blamejared.recipestages.handlers.Recipes;
 import crafttweaker.CraftTweakerAPI;
-import crafttweaker.annotations.ModOnly;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
 import stanhebben.zenscript.annotations.ZenClass;
@@ -12,7 +11,6 @@ import tv.darkosto.sevtweaks.common.util.Helper;
 import java.util.*;
 
 @ZenRegister
-@ModOnly("itemstages")
 @ZenClass("mods.sevtweaks.stager.Stager")
 public class Stager {
     private static Map<String, Stage> stageMap = new HashMap<>();
@@ -162,7 +160,8 @@ public class Stager {
     }
 
     /**
-     *
+     * Update a passed Map of the staged types to another Map listing which contains that type
+     * and a String List of the stages which are for that Staged Type.
      */
     private static void getStagedTypes(Types type, Map<String, List<String>> stringListMap, Stage stage) {
         for (StagedType stagedType : stage.getStagedTypes(type)) {
