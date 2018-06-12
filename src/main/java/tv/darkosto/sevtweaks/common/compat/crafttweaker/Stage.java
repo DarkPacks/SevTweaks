@@ -7,12 +7,18 @@ import crafttweaker.api.item.IIngredient;
 import crafttweaker.mc1120.oredict.MCOreDictEntry;
 import net.darkhax.dimstages.compat.crt.DimensionStagesCrT;
 import net.darkhax.itemstages.compat.crt.ItemStagesCrT;
+import net.darkhax.mobstages.compat.crt.MobStagesCrT;
+import net.darkhax.tinkerstages.compat.crt.TinkerStagesCrT;
+import net.minecraftforge.fml.common.Optional.Method;
 import stanhebben.zenscript.annotations.Optional;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
 import tv.darkosto.sevtweaks.common.util.Helper;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @ZenRegister
@@ -22,7 +28,7 @@ public class Stage {
     private Map<IIngredient, StagedIngredient> stagedIngredients = new HashMap<>();
     private List<StagedType> stagedTypes = new ArrayList<>();
 
-    public Stage(String stage) {
+    Stage(String stage) {
         this.stage = stage;
     }
 
@@ -39,10 +45,6 @@ public class Stage {
     @ZenMethod
     public List<StagedType> getStagedTypes() {
         return stagedTypes;
-    }
-
-    public List<StagedType> getStagedTypes(Types type) {
-        return stagedTypes.stream().filter(t -> t.getType() == type).collect(Collectors.toList());
     }
 
     @ZenMethod
@@ -70,38 +72,22 @@ public class Stage {
 
     @ZenMethod
     public String getContainerStage(String container) {
-        List<StagedType> stagedContainers = getStagedTypes(Types.CONTAINER);
-        for (StagedType stagedContainer : stagedContainers) {
-            if (stagedContainer.getValue().equalsIgnoreCase(container)) {
-                return this.getStage();
-            }
-        }
-
-        return null;
+        return getStageFromType(Types.CONTAINER, container);
     }
 
     @ZenMethod
-    public String getRecipeNameStage(String container) {
-        List<StagedType> stagedRecipes = getStagedTypes(Types.RECIPE_NAME);
-        for (StagedType stagedRecipe : stagedRecipes ) {
-            if (stagedRecipe.getValue().equalsIgnoreCase(container)) {
-                return this.getStage();
-            }
-        }
-
-        return null;
+    public String getRecipeNameStage(String recipeName) {
+        return getStageFromType(Types.RECIPE_NAME, recipeName);
     }
 
     @ZenMethod
     public String getDimensionStage(int dimension) {
-        List<StagedType> stagedDimensions = getStagedTypes(Types.DIMENSION);
-        for (StagedType stagedDimension : stagedDimensions ) {
-            if (stagedDimension.getValue().equalsIgnoreCase(Integer.toString(dimension))) {
-                return this.getStage();
-            }
-        }
+        return getStageFromType(Types.DIMENSION, Integer.toString(dimension));
+    }
 
-        return null;
+    @ZenMethod
+    public String getMobStage(String mobName) {
+        return getStageFromType(Types.MOB, mobName);
     }
 
     @ZenMethod
@@ -115,6 +101,10 @@ public class Stage {
             return true;
         }
 
+        if (this.getMobStage(name) != null) {
+            return true;
+        }
+
         if (Helper.validateRecipeName(name) == null) {
             CraftTweakerAPI.logError(String.format("[Stage %s] Recipe name `%s` is not valid! Example: minecraft:boat", this.getStage(), name));
 
@@ -125,6 +115,7 @@ public class Stage {
     }
 
     @ZenMethod
+    @Method(modid = "dimstages")
     public boolean isStaged(int dimension) {
         return this.getDimensionStage(dimension) != null;
     }
@@ -160,6 +151,7 @@ public class Stage {
     }
 
     @ZenMethod
+    @Method(modid = "dimstages")
     public Stage addDimension(int dimension) {
         stageType(Types.DIMENSION, Integer.toString(dimension));
 
@@ -167,6 +159,7 @@ public class Stage {
     }
 
     @ZenMethod
+    @Method(modid = "recipestages")
     public Stage addContainer(String container) {
         stageType(Types.CONTAINER, container);
 
@@ -174,6 +167,7 @@ public class Stage {
     }
 
     @ZenMethod
+    @Method(modid = "recipestages")
     public Stage addPackage(String container) {
         stageType(Types.PACKAGE, container);
 
@@ -181,6 +175,7 @@ public class Stage {
     }
 
     @ZenMethod
+    @Method(modid = "recipestages")
     public Stage addRecipeName(String recipeName) {
         if (Helper.validateRecipeName(recipeName) == null) {
             CraftTweakerAPI.logError(String.format("[Stage %s] Recipe name `%s` is not valid! Example: minecraft:boat", this.getStage(), recipeName));
@@ -193,9 +188,44 @@ public class Stage {
         return this;
     }
 
-    public void stageType(Types type, String value) {
-        // TODO: Check if it was already added to this Stage.
-        stagedTypes.add(new StagedType(value, type));
+    @ZenMethod
+    @Method(modid = "mobstages")
+    public Stage addMob(String mobName) {
+        stageType(Types.MOB, mobName);
+
+        return this;
+    }
+
+    @ZenMethod
+    @Method(modid = "mobstages")
+    public Stage addMob(String mobName, int dimension) {
+        stageType(Types.MOB, mobName, Integer.toString(dimension));
+
+        return this;
+    }
+
+    @ZenMethod
+    @Method(modid = "tinkerstages")
+    public Stage addTiCMaterial(String materialName) {
+        stageType(Types.TINKER_MATERIAL, materialName);
+
+        return this;
+    }
+
+    @ZenMethod
+    @Method(modid = "tinkerstages")
+    public Stage addTiCModifier(String modifierName) {
+        stageType(Types.TINKER_MODIFIER, modifierName);
+
+        return this;
+    }
+
+    @ZenMethod
+    @Method(modid = "tinkerstages")
+    public Stage addTiCToolType(String toolType) {
+        stageType(Types.TINKER_TOOL, toolType);
+
+        return this;
     }
 
     @ZenMethod
@@ -217,10 +247,63 @@ public class Stage {
                 case DIMENSION:
                     DimensionStagesCrT.addDimensionStage(getStage(), Integer.parseInt(stagedType.getValue()));
                     break;
+                case MOB:
+                    if (stagedType.getSubValue() != null) {
+                        MobStagesCrT.addStage(getStage(), stagedType.getValue(), Integer.parseInt(stagedType.getSubValue()));
+                    } else {
+                        MobStagesCrT.addStage(getStage(), stagedType.getValue());
+                    }
+                    break;
+                case TINKER_MATERIAL:
+                    TinkerStagesCrT.addMaterialStage(getStage(), stagedType.getValue());
+                    break;
+                case TINKER_MODIFIER:
+                    TinkerStagesCrT.addModifierStage(getStage(), stagedType.getValue());
+                    break;
+                case TINKER_TOOL:
+                    TinkerStagesCrT.addToolTypeStage(getStage(), stagedType.getValue());
+                    break;
             }
         }
 
         return this;
     }
-}
 
+    /**
+     * Get the Staged Types by filtering by a Type.
+     */
+    List<StagedType> getStagedTypes(Types type) {
+        return stagedTypes.stream().filter(t -> t.getType() == type).collect(Collectors.toList());
+    }
+
+    /**
+     * Add the Stage Type to the map listing. Also check if that type to stage is not already staged.
+     */
+    private void stageType(Types type, String value) {
+        stageType(type, value, null);
+    }
+    private void stageType(Types type, String value, String subValue) {
+        for (StagedType stagedType : getStagedTypes(type)) {
+            if (stagedType.getValue().equalsIgnoreCase(value)) {
+                CraftTweakerAPI.logError(String.format("[Stage %s] Failed to add the %s `%s` due to already being added.", this.getStage(), type.name(), value));
+
+                return;
+            }
+        }
+
+        stagedTypes.add(new StagedType(value, type, subValue));
+    }
+
+    /**
+     * Check if the Stage Type and the value given is staged in this "Stage".
+     */
+    private String getStageFromType(Types type, String value) {
+        for (StagedType stagedDimension : getStagedTypes(type)) {
+            if (stagedDimension.getValue().equalsIgnoreCase(value)) {
+                return this.getStage();
+            }
+        }
+
+        return null;
+    }
+}

@@ -1,36 +1,39 @@
 package tv.darkosto.sevtweaks.common.compat.crafttweaker;
 
+import stanhebben.zenscript.annotations.ZenClass;
+
 enum Types {
     CONTAINER,
     DIMENSION,
+    MOB,
     PACKAGE,
-    RECIPE_NAME;
-
-    public static Types getFromString(String toGet) {
-        for (Types type : Types.values()) {
-            if (type.name().equalsIgnoreCase(toGet)) {
-                return type;
-            }
-        }
-
-        return null;
-    }
+    RECIPE_NAME,
+    TINKER_MATERIAL,
+    TINKER_MODIFIER,
+    TINKER_TOOL
 }
 
+@ZenClass("mods.sevtweaks.stager.StagedType")
 public class StagedType {
     private String value;
+    private String subValue;
     private Types type;
 
-    public StagedType(String stagedString, Types type) {
+    StagedType(String stagedString, Types type, String subValue) {
         this.value = stagedString;
         this.type = type;
+        this.subValue = subValue;
     }
 
     public String getValue() {
         return value;
     }
 
-    public Types getType() {
+    String getSubValue() {
+        return subValue;
+    }
+
+    Types getType() {
         return type;
     }
 }

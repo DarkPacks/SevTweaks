@@ -1,12 +1,14 @@
 package tv.darkosto.sevtweaks.common.compat.crafttweaker;
 
 import crafttweaker.api.item.IIngredient;
+import stanhebben.zenscript.annotations.ZenClass;
 
+@ZenClass("mods.sevtweaks.stager.StagedIngredient")
 public class StagedIngredient {
     private IIngredient ingredient;
     private boolean stageRecipe;
 
-    public StagedIngredient(IIngredient ingredients, boolean stageRecipe) {
+    StagedIngredient(IIngredient ingredients, boolean stageRecipe) {
         this.ingredient = ingredients;
         this.stageRecipe = stageRecipe;
     }
@@ -15,7 +17,7 @@ public class StagedIngredient {
         return ingredient;
     }
 
-    public boolean shouldStageRecipe() {
+    boolean shouldStageRecipe() {
         return stageRecipe;
     }
 }

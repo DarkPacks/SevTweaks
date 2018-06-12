@@ -45,6 +45,10 @@ dependencies {
     deobfCompile "net.darkhax.itemstages:ItemStages-1.12.2:2.0.35:deobf"
     // Dimension Stages
     deobfCompile "net.darkhax.dimstages:DimensionStages-1.12.2:2.0.+"
+    // Mob Stages
+    deobfCompile "net.darkhax.mobstages:MobStages-1.12.2:2.0.+"
+	// Tinker Stages
+    deobfCompile "net.darkhax.tinkerstages:TinkerStages-1.12.2:2.0.+"
     // BetterWithMods
     deobfCompile "betterwithmods:BetterWithMods:1.12-2.1.8-477"
     // BookShelf
@@ -64,7 +68,7 @@ repositories {
     maven {
         url 'http://tehnut.info/maven'
     }
-    // GameStages, ItemStages, DimensionStages
+    // GameStages, ItemStages, DimensionStages, MobStages, TinkerStages
     maven {
         url 'https://maven.mcmoddev.com'
     }
