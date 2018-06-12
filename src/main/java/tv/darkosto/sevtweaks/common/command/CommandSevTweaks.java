@@ -15,6 +15,16 @@ import java.util.Collections;
 import java.util.List;
 
 public class CommandSevTweaks extends CommandBase {
+    private static final String[] COMMANDS = new String[]{
+            "gs",
+            "gamestage"
+    };
+    private static final String[] GSCOMMANDS = new String[]{
+            "init",
+            "start",
+            "sync"
+    };
+
     @Override
     @Nonnull
     public String getName() {
@@ -31,17 +41,6 @@ public class CommandSevTweaks extends CommandBase {
     public String getUsage(@Nonnull ICommandSender sender) {
         return "/sevtweaks <action> [arguments...]";
     }
-
-    private static final String[] COMMANDS = new String[]{
-            "gs",
-            "gamestage"
-    };
-
-    private static final String[] GSCOMMANDS = new String[]{
-            "init",
-            "start",
-            "sync"
-    };
 
     @Override
     @Nonnull

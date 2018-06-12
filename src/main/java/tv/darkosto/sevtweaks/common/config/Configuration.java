@@ -13,6 +13,14 @@ public class Configuration {
     public static CanceledEvents canceledEvents = new CanceledEvents();
     public static ShearedCreeperItemShead creeperItemShead = new ShearedCreeperItemShead();
 
+    @SubscribeEvent
+    public static void onConfigChangeEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
+        if (!event.getModID().equals(References.modID)) {
+            return;
+        }
+        ConfigManager.sync(References.modID, Config.Type.INSTANCE);
+    }
+
     public static class CanceledEvents {
         @Config.Comment("Should the fishing rod event be cancelled. Thus not allowing any loot to be harvested.")
         @Config.Name("Cancel Fishing Rod Event")
@@ -36,14 +44,6 @@ public class Configuration {
 
         @Config.Comment("Listing of the dimensions that the creeper won't shead the item.")
         @Config.Name("Blacklisted Dimensions")
-        public Integer[] blacklistedDimensions = new Integer[]{ -1 };
-    }
-
-    @SubscribeEvent
-    public static void onConfigChangeEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
-        if (!event.getModID().equals(References.modID)) {
-            return;
-        }
-        ConfigManager.sync(References.modID, Config.Type.INSTANCE);
+        public Integer[] blacklistedDimensions = new Integer[]{-1};
     }
 }

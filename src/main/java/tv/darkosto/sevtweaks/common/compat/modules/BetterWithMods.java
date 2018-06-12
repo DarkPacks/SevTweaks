@@ -9,29 +9,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import tv.darkosto.sevtweaks.common.config.Configuration;
 import tv.darkosto.sevtweaks.common.compat.ICompat;
+import tv.darkosto.sevtweaks.common.config.Configuration;
 
 import java.util.Arrays;
 import java.util.Random;
 
 public class BetterWithMods extends ICompat {
     private static int timeUntilNextDrop = new Random().nextInt(6000) + 6000;
-
-    @Override
-    public void preInit() {
-        if (!Configuration.creeperItemShead.shouldShead) {
-            MinecraftForge.EVENT_BUS.register(this);
-        }
-    }
-
-    @Override
-    public void init() {
-    }
-
-    @Override
-    public void postInit() {
-    }
 
     @SubscribeEvent
     public static void onLivingUpdate(LivingEvent event) {
@@ -61,5 +46,20 @@ public class BetterWithMods extends ICompat {
             entity.entityDropItem(itemToDrop, 0.9f);
             timeUntilNextDrop = new Random().nextInt(6000) + 6000;
         }
+    }
+
+    @Override
+    public void preInit() {
+        if (!Configuration.creeperItemShead.shouldShead) {
+            MinecraftForge.EVENT_BUS.register(this);
+        }
+    }
+
+    @Override
+    public void init() {
+    }
+
+    @Override
+    public void postInit() {
     }
 }

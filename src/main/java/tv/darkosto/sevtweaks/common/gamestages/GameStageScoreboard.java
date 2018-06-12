@@ -5,7 +5,10 @@ import net.darkhax.gamestages.data.IStageData;
 import net.darkhax.gamestages.event.GameStageEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.scoreboard.*;
+import net.minecraft.scoreboard.IScoreCriteria;
+import net.minecraft.scoreboard.Score;
+import net.minecraft.scoreboard.ScoreObjective;
+import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.world.World;
@@ -20,26 +23,6 @@ import java.util.Objects;
 
 public class GameStageScoreboard {
     private static String OBJECTIVE_NAME = "Stage";
-
-    private enum Stages {
-        TUTORIAL,
-        ZERO,
-        ONE,
-        TWO,
-        THREE,
-        FOUR,
-        FIVE,
-        CREATIVE;
-
-        public static boolean contains(String stage) {
-            for (Stages s: Stages.values()) {
-                if (s.name().equals(stage)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
 
     /**
      * Set the Stage Value to the Scoreboard in the World.
@@ -76,12 +59,40 @@ public class GameStageScoreboard {
      */
     private static void handlePlayerStage(EntityPlayer player, String stageFromEvent) {
         if (!Stages.contains(stageFromEvent)) {
-            SevTweaks.logger.debug("Stage {} is not a valid stage for the modpack." , stageFromEvent);
+            SevTweaks.logger.debug("Stage {} is not a valid stage for the modpack.", stageFromEvent);
         }
 
         Collection<String> stages = getPlayerStages(player);
         Stages highestStage = getHighestStage(stages);
         setStageScore(player, highestStage.ordinal() - 1);
+    }
+
+    /**
+     * Get the highest stage from the Collection of Stages the player currently has.
+     */
+    private static Stages getHighestStage(Collection<String> playerStages) {
+        Stages[] stages = Stages.values();
+        ArrayUtils.reverse(stages);
+        for (Stages s : stages) {
+            if (playerStages.contains(s.name().toLowerCase())) {
+                return s;
+            }
+        }
+
+        return Stages.TUTORIAL;
+    }
+
+    /**
+     * When a new Stage is added to a player call the method to add the stage to the players scoreboard.
+     */
+    @SubscribeEvent
+    public static void onStageAdded(GameStageEvent.Added stageEvent) {
+        handlePlayerStage(stageEvent.getEntityPlayer(), stageEvent.getStageName());
+    }
+
+    @SubscribeEvent
+    public static void onStageRemoved(GameStageEvent.Removed stageEvent) {
+        handlePlayerStage(stageEvent.getEntityPlayer(), stageEvent.getStageName());
     }
 
     /**
@@ -121,31 +132,23 @@ public class GameStageScoreboard {
         }
     }
 
-    /**
-     * Get the highest stage from the Collection of Stages the player currently has.
-     */
-    private static Stages getHighestStage(Collection<String> playerStages) {
-        Stages[] stages = Stages.values();
-        ArrayUtils.reverse(stages);
-        for (Stages s : stages) {
-            if (playerStages.contains(s.name().toLowerCase())) {
-                return s;
+    private enum Stages {
+        TUTORIAL,
+        ZERO,
+        ONE,
+        TWO,
+        THREE,
+        FOUR,
+        FIVE,
+        CREATIVE;
+
+        public static boolean contains(String stage) {
+            for (Stages s : Stages.values()) {
+                if (s.name().equals(stage)) {
+                    return true;
+                }
             }
+            return false;
         }
-
-        return Stages.TUTORIAL;
-    }
-
-    /**
-     * When a new Stage is added to a player call the method to add the stage to the players scoreboard.
-     */
-    @SubscribeEvent
-    public static void onStageAdded(GameStageEvent.Added stageEvent) {
-        handlePlayerStage(stageEvent.getEntityPlayer(), stageEvent.getStageName());
-    }
-
-    @SubscribeEvent
-    public static void onStageRemoved(GameStageEvent.Removed stageEvent) {
-        handlePlayerStage(stageEvent.getEntityPlayer(), stageEvent.getStageName());
     }
 }

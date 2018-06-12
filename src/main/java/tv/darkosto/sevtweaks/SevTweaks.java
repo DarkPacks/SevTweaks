@@ -10,14 +10,18 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Logger;
 import tv.darkosto.sevtweaks.common.command.CommandSevTweaks;
-import tv.darkosto.sevtweaks.common.gamestages.GameStageScoreboard;
-import tv.darkosto.sevtweaks.common.util.References;
 import tv.darkosto.sevtweaks.common.compat.Compat;
 import tv.darkosto.sevtweaks.common.events.CanceledEvents;
+import tv.darkosto.sevtweaks.common.gamestages.GameStageScoreboard;
+import tv.darkosto.sevtweaks.common.util.References;
 
 @Mod(modid = References.modID, name = References.modName, version = References.modVersion,
-        acceptedMinecraftVersions = References.mcVersion, dependencies = "after:guideapi@[1.12-2.1.4-57,];" +
-        "after:itemstages@[2.0.35,];after:gamestages@[2.0.91,];after:dimstages@[2.0.20,];after:crafttweaker@[1.12-4.1.8.470,]")
+        acceptedMinecraftVersions = References.mcVersion,
+        dependencies =
+                "required-after:crafttweaker@[1.12-4.1.8.470,];" +
+                        "after:guideapi@[1.12-2.1.4-57,];after:itemstages@[2.0.35,];" +
+                        "after:gamestages@[2.0.91,];after:dimstages@[2.0.20,];"
+)
 public class SevTweaks {
 
     public static Logger logger;
