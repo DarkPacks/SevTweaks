@@ -191,6 +191,17 @@ public class Stage {
 
     @ZenMethod
     @Method(modid = "mobstages")
+    public Stage addMob(String[] mobNames) {
+        for (String mobName : mobNames) {
+            addMob(mobName);
+        }
+
+        return this;
+    }
+
+    @ZenMethod
+    @Method(modid = "mobstages")
+    @SuppressWarnings("UnusedReturnValue")
     public Stage addMob(String mobName) {
         stageType(Types.MOB, mobName);
 
@@ -199,6 +210,17 @@ public class Stage {
 
     @ZenMethod
     @Method(modid = "mobstages")
+    public Stage addMob(String[] mobNames, int dimension) {
+        for (String mobName : mobNames) {
+            addMob(mobName, dimension);
+        }
+
+        return this;
+    }
+
+    @ZenMethod
+    @Method(modid = "mobstages")
+    @SuppressWarnings("UnusedReturnValue")
     public Stage addMob(String mobName, int dimension) {
         stageType(Types.MOB, mobName, Integer.toString(dimension));
 
@@ -207,6 +229,17 @@ public class Stage {
 
     @ZenMethod
     @Method(modid = "tinkerstages")
+    public Stage addTiCMaterial(String[] materialNames) {
+        for (String materialName : materialNames) {
+            addTiCMaterial(materialName);
+        }
+
+        return this;
+    }
+
+    @ZenMethod
+    @Method(modid = "tinkerstages")
+    @SuppressWarnings("UnusedReturnValue")
     public Stage addTiCMaterial(String materialName) {
         stageType(Types.TINKER_MATERIAL, materialName);
 
@@ -223,6 +256,17 @@ public class Stage {
 
     @ZenMethod
     @Method(modid = "tinkerstages")
+    public Stage addTiCToolType(String[] toolTypes) {
+        for (String toolType : toolTypes) {
+            addTiCToolType(toolType);
+        }
+
+        return this;
+    }
+
+    @ZenMethod
+    @Method(modid = "tinkerstages")
+    @SuppressWarnings("UnusedReturnValue")
     public Stage addTiCToolType(String toolType) {
         stageType(Types.TINKER_TOOL, toolType);
 
