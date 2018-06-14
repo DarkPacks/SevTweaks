@@ -92,6 +92,16 @@ public class Stage {
     }
 
     @ZenMethod
+    public String getTiCMaterialStage(String material) {
+        return getStageFromType(Types.TINKER_MATERIAL, material);
+    }
+
+    @ZenMethod
+    public String getTiCToolStage(String toolName) {
+        return getStageFromType(Types.TINKER_TOOL, toolName);
+    }
+
+    @ZenMethod
     public boolean isStaged(IIngredient ingredient) {
         return this.getIngredientStage(ingredient) != null;
     }
@@ -103,6 +113,14 @@ public class Stage {
         }
 
         if (this.getMobStage(name) != null) {
+            return true;
+        }
+
+        if (this.getTiCMaterialStage(name) != null) {
+            return true;
+        }
+
+        if (this.getTiCToolStage(name) != null) {
             return true;
         }
 
