@@ -12,6 +12,7 @@ import net.darkhax.tinkerstages.compat.crt.TinkerStagesCrT;
 import net.minecraftforge.fml.common.Optional.Method;
 import stanhebben.zenscript.annotations.Optional;
 import stanhebben.zenscript.annotations.ZenClass;
+import stanhebben.zenscript.annotations.ZenGetter;
 import stanhebben.zenscript.annotations.ZenMethod;
 import tv.darkosto.sevtweaks.common.util.Helper;
 
@@ -32,7 +33,7 @@ public class Stage {
         this.stage = stage;
     }
 
-    @ZenMethod
+    @ZenGetter("stage")
     public String getStage() {
         return stage;
     }
