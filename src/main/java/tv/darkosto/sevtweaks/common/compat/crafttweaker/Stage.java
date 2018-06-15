@@ -209,7 +209,7 @@ public class Stage {
 
     @ZenMethod
     @Method(modid = "mobstages")
-    public Stage addMob(String[] mobNames) {
+    public Stage addMobs(String[] mobNames) {
         for (String mobName : mobNames) {
             addMob(mobName);
         }
@@ -228,7 +228,7 @@ public class Stage {
 
     @ZenMethod
     @Method(modid = "mobstages")
-    public Stage addMob(String[] mobNames, int dimension) {
+    public Stage addMobs(String[] mobNames, int dimension) {
         for (String mobName : mobNames) {
             addMob(mobName, dimension);
         }
@@ -247,7 +247,7 @@ public class Stage {
 
     @ZenMethod
     @Method(modid = "tinkerstages")
-    public Stage addTiCMaterial(String[] materialNames) {
+    public Stage addTiCMaterials(String[] materialNames) {
         for (String materialName : materialNames) {
             addTiCMaterial(materialName);
         }
@@ -274,7 +274,7 @@ public class Stage {
 
     @ZenMethod
     @Method(modid = "tinkerstages")
-    public Stage addTiCToolType(String[] toolTypes) {
+    public Stage addTiCToolTypes(String[] toolTypes) {
         for (String toolType : toolTypes) {
             addTiCToolType(toolType);
         }
