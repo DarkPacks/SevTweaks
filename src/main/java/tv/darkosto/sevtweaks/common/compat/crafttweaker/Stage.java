@@ -72,32 +72,32 @@ public class Stage {
     }
 
     @ZenMethod
-    public String getContainerStage(String container) {
+    public Stage getContainerStage(String container) {
         return getStageFromType(Types.CONTAINER, container);
     }
 
     @ZenMethod
-    public String getRecipeNameStage(String recipeName) {
+    public Stage getRecipeNameStage(String recipeName) {
         return getStageFromType(Types.RECIPE_NAME, recipeName);
     }
 
     @ZenMethod
-    public String getDimensionStage(int dimension) {
+    public Stage getDimensionStage(int dimension) {
         return getStageFromType(Types.DIMENSION, Integer.toString(dimension));
     }
 
     @ZenMethod
-    public String getMobStage(String mobName) {
+    public Stage getMobStage(String mobName) {
         return getStageFromType(Types.MOB, mobName);
     }
 
     @ZenMethod
-    public String getTiCMaterialStage(String material) {
+    public Stage getTiCMaterialStage(String material) {
         return getStageFromType(Types.TINKER_MATERIAL, material);
     }
 
     @ZenMethod
-    public String getTiCToolStage(String toolName) {
+    public Stage getTiCToolStage(String toolName) {
         return getStageFromType(Types.TINKER_TOOL, toolName);
     }
 
@@ -360,10 +360,10 @@ public class Stage {
     /**
      * Check if the Stage Type and the value given is staged in this "Stage".
      */
-    private String getStageFromType(Types type, String value) {
+    private Stage getStageFromType(Types type, String value) {
         for (StagedType stagedDimension : getStagedTypes(type)) {
             if (stagedDimension.getValue().equalsIgnoreCase(value)) {
-                return this.getStage();
+                return this;
             }
         }
 

@@ -50,14 +50,14 @@ public class Stager {
     }
 
     @ZenMethod
-    public static String getIngredientStage(IIngredient ingredient) {
+    public static Stage getIngredientStage(IIngredient ingredient) {
         if (ingredient == null) {
             return null;
         }
 
         for (Stage stage : stageMap.values()) {
             if (stage.isStaged(ingredient)) {
-                return stage.getStage();
+                return stage;
             }
         }
 
@@ -66,10 +66,10 @@ public class Stager {
 
     @ZenMethod
     @Method(modid = "recipestages")
-    public static String getRecipeNameStage(String recipeName) {
+    public static Stage getRecipeNameStage(String recipeName) {
         for (Stage stage : stageMap.values()) {
             if (stage.getRecipeNameStage(recipeName) != null) {
-                return stage.getStage();
+                return stage;
             }
         }
 
@@ -78,10 +78,10 @@ public class Stager {
 
     @ZenMethod
     @Method(modid = "dimstages")
-    public static String getDimensionStage(int dimension) {
+    public static Stage getDimensionStage(int dimension) {
         for (Stage stage : stageMap.values()) {
             if (stage.getDimensionStage(dimension) != null) {
-                return stage.getStage();
+                return stage;
             }
         }
 
@@ -90,22 +90,22 @@ public class Stager {
 
     @ZenMethod
     @Method(modid = "recipestages")
-    public static List<String> getContainerStages(String container) {
+    public static List<Stage> getContainerStages(String container) {
         return getTypeStages(Types.CONTAINER, container);
     }
 
     @ZenMethod
     @Method(modid = "recipestages")
-    public static List<String> getPackageStages(String packageName) {
+    public static List<Stage> getPackageStages(String packageName) {
         return getTypeStages(Types.PACKAGE, packageName);
     }
 
     @ZenMethod
     @Method(modid = "mobstages")
-    public static String getMobStage(String mobName) {
+    public static Stage getMobStage(String mobName) {
         for (Stage stage : stageMap.values()) {
             if (stage.getMobStage(mobName) != null) {
-                return stage.getStage();
+                return stage;
             }
         }
 
@@ -114,10 +114,10 @@ public class Stager {
 
     @ZenMethod
     @Method(modid = "tinkerstages")
-    public static String getTiCMaterialStage(String material) {
+    public static Stage getTiCMaterialStage(String material) {
         for (Stage stage : stageMap.values()) {
             if (stage.getTiCMaterialStage(material) != null) {
-                return stage.getStage();
+                return stage;
             }
         }
 
@@ -241,8 +241,8 @@ public class Stager {
         return null;
     }
 
-    private static List<String> getTypeStages(Types type, String value) {
-        List<String> stages = new ArrayList<>();
+    private static List<Stage> getTypeStages(Types type, String value) {
+        List<Stage> stages = new ArrayList<>();
         if (value == null || value.length() < 1) {
             return null;
         }
@@ -251,7 +251,7 @@ public class Stager {
             List<StagedType> stagedTypes = stage.getStagedTypes(type);
             for (StagedType stagedType : stagedTypes) {
                 if (stagedType.getValue().equalsIgnoreCase(value)) {
-                    stages.add(stage.getStage());
+                    stages.add(stage);
                 }
             }
         }
