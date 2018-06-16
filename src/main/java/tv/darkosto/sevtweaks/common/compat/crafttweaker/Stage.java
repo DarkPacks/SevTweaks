@@ -4,6 +4,7 @@ import com.blamejared.recipestages.handlers.Recipes;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
+import crafttweaker.api.liquid.ILiquidStack;
 import crafttweaker.mc1120.oredict.MCOreDictEntry;
 import net.darkhax.dimstages.compat.crt.DimensionStagesCrT;
 import net.darkhax.itemstages.compat.crt.ItemStagesCrT;
@@ -49,22 +50,39 @@ public class Stage {
     }
 
     @ZenMethod
-    public String getIngredientStage(IIngredient testIngredient) {
-        for (Map.Entry<IIngredient, StagedIngredient> stagedIngredient : stagedIngredients.entrySet()) {
-            IIngredient ingredient = stagedIngredient.getValue().getIngredient();
+    public List<ILiquidStack> getStagedLiquids() {
+        List<ILiquidStack> stackList = new ArrayList<>();
+        for (Map.Entry<IIngredient, StagedIngredient> stagedIngredientEntry : stagedIngredients.entrySet()) {
+            StagedIngredient ingredient = stagedIngredientEntry.getValue();
+            if (ingredient.getIngredient() instanceof ILiquidStack) {
+                stackList.add((ILiquidStack) ingredient.getIngredient());
+            }
+        }
+
+        return stackList;
+    }
+
+    @ZenMethod
+    public Stage getIngredientStage(IIngredient testIngredient) {
+        for (Map.Entry<IIngredient, StagedIngredient> stagedIngredientEntry : stagedIngredients.entrySet()) {
+            IIngredient ingredient = stagedIngredientEntry.getValue().getIngredient();
 
             if (testIngredient instanceof MCOreDictEntry) {
                 if (ingredient instanceof MCOreDictEntry) {
                     if (((MCOreDictEntry) testIngredient).getName().equals(((MCOreDictEntry) ingredient).getName())) {
-                        return this.getStage();
+                        return this;
                     }
                 }
             } else if (ingredient instanceof MCOreDictEntry) {
                 if (ingredient.contains(testIngredient)) {
-                    return this.getStage();
+                    return this;
+                }
+            } else if (testIngredient instanceof ILiquidStack) {
+                if (ingredient.matches((ILiquidStack) testIngredient)) {
+                    return this;
                 }
             } else if (ingredient.contains(testIngredient)) {
-                return this.getStage();
+                return this;
             }
         }
 
@@ -296,9 +314,13 @@ public class Stage {
     public Stage build() {
         for (Map.Entry<IIngredient, StagedIngredient> stagedIngredient : stagedIngredients.entrySet()) {
             StagedIngredient ingredient = stagedIngredient.getValue();
-            ItemStagesCrT.addItemStage(getStage(), ingredient.getIngredient());
-            if (ingredient.shouldStageRecipe()) {
-                Recipes.setRecipeStage(getStage(), ingredient.getIngredient());
+            if (ingredient.getIngredient() instanceof ILiquidStack) {
+                ItemStagesCrT.stageLiquid(getStage(), (ILiquidStack) ingredient.getIngredient());
+            } else {
+                ItemStagesCrT.addItemStage(getStage(), ingredient.getIngredient());
+                if (ingredient.shouldStageRecipe()) {
+                    Recipes.setRecipeStage(getStage(), ingredient.getIngredient());
+                }
             }
         }
 

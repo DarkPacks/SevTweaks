@@ -4,6 +4,7 @@ import com.blamejared.recipestages.handlers.Recipes;
 import crafttweaker.CraftTweakerAPI;
 import crafttweaker.annotations.ZenRegister;
 import crafttweaker.api.item.IIngredient;
+import crafttweaker.api.liquid.ILiquidStack;
 import net.minecraftforge.fml.common.Optional.Method;
 import stanhebben.zenscript.annotations.ZenClass;
 import stanhebben.zenscript.annotations.ZenMethod;
@@ -62,6 +63,29 @@ public class Stager {
         }
 
         return null;
+    }
+
+    @ZenMethod
+    public static Stage getLiquidStage(ILiquidStack liquidStack) {
+        return getIngredientStage(liquidStack);
+    }
+
+    @ZenMethod
+    public static Map<Stage, ILiquidStack[]> getStagedLiquids() {
+        Map<Stage, ILiquidStack[]> liquidStacks = new HashMap<>();
+        for (Stage stage : stageMap.values()) {
+            List<ILiquidStack> liquidStackList = stage.getStagedLiquids();
+            if (liquidStackList.size() < 1) {
+                continue;
+            }
+            ILiquidStack[] fluidStacks = new ILiquidStack[liquidStackList.size()];
+            for (int i = 0; i < liquidStackList.size(); i++) {
+                fluidStacks[i] = liquidStackList.get(i);
+            }
+            liquidStacks.put(stage, fluidStacks);
+        }
+
+        return liquidStacks;
     }
 
     @ZenMethod
