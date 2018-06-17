@@ -157,9 +157,6 @@ public class Stage {
         return this.getDimensionStage(dimension) != null;
     }
 
-    /**
-     * Set the stage on the IItemStack given.
-     */
     @ZenMethod
     @SuppressWarnings("UnusedReturnValue")
     public Stage addIngredient(IIngredient ingredient, @Optional(valueBoolean = true) boolean recipeStage) {
@@ -179,10 +176,25 @@ public class Stage {
     }
 
     @ZenMethod
+    @SuppressWarnings("UnusedReturnValue")
     public Stage addIngredients(IIngredient[] ingredients, @Optional(valueBoolean = true) boolean recipeStage) {
         for (IIngredient ingredient : ingredients) {
             addIngredient(ingredient, recipeStage);
         }
+
+        return this;
+    }
+
+    @ZenMethod
+    public Stage addLiquid(ILiquidStack liquidStack) {
+        addIngredient(liquidStack, false);
+
+        return this;
+    }
+
+    @ZenMethod
+    public Stage addLiquids(ILiquidStack[] liquidStacks) {
+        addIngredients(liquidStacks, false);
 
         return this;
     }

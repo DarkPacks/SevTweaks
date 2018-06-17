@@ -78,10 +78,9 @@ public class Stager {
             if (liquidStackList.size() < 1) {
                 continue;
             }
-            ILiquidStack[] fluidStacks = new ILiquidStack[liquidStackList.size()];
-            for (int i = 0; i < liquidStackList.size(); i++) {
-                fluidStacks[i] = liquidStackList.get(i);
-            }
+            ILiquidStack[] fluidStacks = new ILiquidStack[]{};
+            fluidStacks = liquidStackList.toArray(fluidStacks);
+
             liquidStacks.put(stage, fluidStacks);
         }
 
@@ -146,6 +145,20 @@ public class Stager {
         }
 
         return null;
+    }
+
+    @ZenMethod
+    public void addPackage(String packageName, Stage[] stages) {
+        for (Stage stage : stages) {
+            stage.addPackage(packageName);
+        }
+    }
+
+    @ZenMethod
+    public void addContainer(String containerName, Stage[] stages) {
+        for (Stage stage : stages) {
+            stage.addContainer(containerName);
+        }
     }
 
     @ZenMethod
