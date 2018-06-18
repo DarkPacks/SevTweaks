@@ -32,7 +32,7 @@ minecraft {
 
 dependencies {
     // CraftTweaker
-    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.8.470"
+    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.8.476"
     // Immersive Engineering
     deobfCompile "blusunrize:ImmersiveEngineering:0.12-82-389:deobf"
     // JEI
@@ -41,16 +41,6 @@ dependencies {
     deobfCompile "info.amerifrance.guideapi:Guide-API:1.12-2.1.4-57"
     // GameStages
     deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.0.91:deobf"
-    // ItemStages
-    deobfCompile "net.darkhax.itemstages:ItemStages-1.12.2:2.0.35:deobf"
-    // Dimension Stages
-    deobfCompile "net.darkhax.dimstages:DimensionStages-1.12.2:2.0.+"
-    // Mob Stages
-    deobfCompile "net.darkhax.mobstages:MobStages-1.12.2:2.0.+"
-	// Tinker Stages
-    deobfCompile "net.darkhax.tinkerstages:TinkerStages-1.12.2:2.0.+"
-    // BetterWithMods
-    deobfCompile "betterwithmods:BetterWithMods:1.12-2.1.8-477"
     // BookShelf
     deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:2.3.+"
 }
