@@ -12,6 +12,7 @@ import tv.darkosto.sevtweaks.common.util.References;
 public class Configuration {
     public static CanceledEvents canceledEvents = new CanceledEvents();
     public static ShearedCreeperItemShead creeperItemShead = new ShearedCreeperItemShead();
+    public static GameStageScoreboard gamestageScoreboard = new GameStageScoreboard();
 
     @SubscribeEvent
     public static void onConfigChangeEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
@@ -45,5 +46,11 @@ public class Configuration {
         @Config.Comment("Listing of the dimensions that the creeper won't shead the item.")
         @Config.Name("Blacklisted Dimensions")
         public Integer[] blacklistedDimensions = new Integer[]{-1};
+    }
+
+    public static class GameStageScoreboard {
+        @Config.Comment("The position for the scoreboard. Valid: 0 is tab menu, 1 is sidebar, 2 is below name.")
+        @Config.Name("Scoreboard Position")
+        public int scoreboardPosition = 2;
     }
 }

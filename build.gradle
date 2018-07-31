@@ -40,7 +40,7 @@ dependencies {
     // Guide-API
     deobfCompile "info.amerifrance.guideapi:Guide-API:1.12-2.1.4-57"
     // GameStages
-    deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.0.91:deobf"
+    deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.+:deobf"
     // BookShelf
     deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:2.3.+"
     // BetterWithMods

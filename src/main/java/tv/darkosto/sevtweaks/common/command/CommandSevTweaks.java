@@ -16,12 +16,10 @@ import java.util.List;
 
 public class CommandSevTweaks extends CommandBase {
     private static final String[] COMMANDS = new String[]{
-            "gs",
             "gamestage"
     };
     private static final String[] GSCOMMANDS = new String[]{
             "init",
-            "start",
             "sync"
     };
 
@@ -49,7 +47,7 @@ public class CommandSevTweaks extends CommandBase {
             return getListOfStringsMatchingLastWord(args, COMMANDS);
         } else {
             String identifier = args[0].toLowerCase();
-            if (identifier.equals("gs") || identifier.equals("gamestages")) {
+            if (identifier.equals("gamestage")) {
                 return getListOfStringsMatchingLastWord(args, GSCOMMANDS);
             }
         }
@@ -71,11 +69,9 @@ public class CommandSevTweaks extends CommandBase {
         }
         String subIdentifier = args[1];
         switch (identifier.toLowerCase()) {
-            case "gs":
             case "gamestage":
                 switch (subIdentifier.toLowerCase()) {
                     case "init":
-                    case "start":
                         if (SevTweaks.scoreboard.init(server)) {
                             sender.sendMessage(new TextComponentTranslation("command.sevtweaks.gsscore.success"));
                             return;

@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.lang3.ArrayUtils;
 import tv.darkosto.sevtweaks.SevTweaks;
+import tv.darkosto.sevtweaks.common.config.Configuration;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -22,7 +23,8 @@ import java.util.Objects;
 // TODO: Switch hardcoded ENUM to use one via a Config.
 
 public class GameStageScoreboard {
-    private static String OBJECTIVE_NAME = "Stage";
+    private final static String OBJECTIVE_NAME = "ST_Stage";
+    private final static String OBJECTIVE_TITLE = "Players Stage";
 
     /**
      * Set the Stage Value to the Scoreboard in the World.
@@ -37,7 +39,7 @@ public class GameStageScoreboard {
             return;
         }
 
-        if (stageValue < 0) {
+        if (stageValue <= 0) {
             scoreboard.removeObjectiveFromEntity(player.getName(), objective);
         } else {
             Score score = scoreboard.getOrCreateScore(player.getName(), objective);
@@ -90,9 +92,20 @@ public class GameStageScoreboard {
         handlePlayerStage(stageEvent.getEntityPlayer(), stageEvent.getStageName());
     }
 
+    /**
+     * When a Stage is removed from a player call the method to update the players scoreboard.
+     */
     @SubscribeEvent
     public static void onStageRemoved(GameStageEvent.Removed stageEvent) {
         handlePlayerStage(stageEvent.getEntityPlayer(), stageEvent.getStageName());
+    }
+
+    /**
+     * When the Stages are removed from a player call the method to remove them from the Scoreboard.
+     */
+    @SubscribeEvent
+    public static void onStageCleared(GameStageEvent.Cleared clearedEvent) {
+        setStageScore(clearedEvent.getEntityPlayer(), 0);
     }
 
     /**
@@ -104,10 +117,21 @@ public class GameStageScoreboard {
             return false;
         }
         ScoreObjective objective = scoreboard.addScoreObjective(OBJECTIVE_NAME, IScoreCriteria.DUMMY);
-        objective.setDisplayName("Player Stages");
-        scoreboard.setObjectiveInDisplaySlot(1, objective);
+        objective.setDisplayName(OBJECTIVE_TITLE);
+        scoreboard.setObjectiveInDisplaySlot(validatePosition(), objective);
 
         return true;
+    }
+
+    /**
+     * Validate the position from the config, if not valid fall back to 2.
+     */
+    private int validatePosition() {
+        int configPosition = Configuration.gamestageScoreboard.scoreboardPosition;
+        if (configPosition < 0 || configPosition > 2) {
+            return 2;
+        }
+        return configPosition;
     }
 
     /**
