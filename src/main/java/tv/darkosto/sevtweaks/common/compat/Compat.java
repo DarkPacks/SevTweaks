@@ -2,9 +2,7 @@ package tv.darkosto.sevtweaks.common.compat;
 
 import net.minecraftforge.fml.common.Loader;
 import tv.darkosto.sevtweaks.SevTweaks;
-import tv.darkosto.sevtweaks.common.compat.modules.BetterWithMods;
-import tv.darkosto.sevtweaks.common.compat.modules.Natura;
-import tv.darkosto.sevtweaks.common.compat.modules.Rustic;
+import tv.darkosto.sevtweaks.common.compat.modules.*;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,6 +22,7 @@ public class Compat {
         compatModules.put("natura", Natura.class);
         compatModules.put("rustic", Rustic.class);
         compatModules.put("betterwithmods", BetterWithMods.class);
+        compatModules.put("galacticraftplanets", GalacticraftPlanets.class);
     }
 
     public static void compactPreInit() {
@@ -55,7 +54,7 @@ public class Compat {
             try {
                 compat.postInit();
             } catch (Exception el) {
-                SevTweaks.logger.error("Compat module for " + compat + " could not be postInitialized.");
+                SevTweaks.logger.error("Compat module for " + compat + " could not be postInitialized.", el);
             }
         }
     }

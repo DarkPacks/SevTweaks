@@ -17,7 +17,7 @@ import tv.darkosto.sevtweaks.common.util.References;
 
 @Mod(modid = References.modID, name = References.modName, version = References.modVersion,
         acceptedMinecraftVersions = References.mcVersion,
-        dependencies = "required-after:crafttweaker@[1.12-4.1.8.470,];after:gamestages@[2.0.91,];"
+        dependencies = "required-after:crafttweaker@[1.12-4.1.8.470,];after:gamestages@[2.0.97,];after:galacticraftplanets@[4.0.1.181,]"
 )
 public class SevTweaks {
 
