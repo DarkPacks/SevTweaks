@@ -35,7 +35,7 @@ public class GameStageScoreboard {
         ScoreObjective objective = scoreboard.getObjective(OBJECTIVE_NAME);
 
         if (objective == null) {
-            SevTweaks.logger.debug("World does not have the objective {}", player.world.getProviderName(), OBJECTIVE_NAME);
+            SevTweaks.logger.debug(String.format("World does not have the objective %s", OBJECTIVE_NAME));
             return;
         }
 
