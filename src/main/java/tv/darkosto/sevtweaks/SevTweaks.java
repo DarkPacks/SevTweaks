@@ -13,11 +13,13 @@ import tv.darkosto.sevtweaks.common.command.CommandSevTweaks;
 import tv.darkosto.sevtweaks.common.compat.Compat;
 import tv.darkosto.sevtweaks.common.events.CanceledEvents;
 import tv.darkosto.sevtweaks.common.gamestages.GameStageScoreboard;
+import tv.darkosto.sevtweaks.common.gamestages.PNCDroneStaging;
 import tv.darkosto.sevtweaks.common.util.References;
 
 @Mod(modid = References.modID, name = References.modName, version = References.modVersion,
         acceptedMinecraftVersions = References.mcVersion,
-        dependencies = "required-after:crafttweaker@[1.12-4.1.8.470,];after:gamestages@[2.0.97,];after:galacticraftplanets@[4.0.1.181,]"
+        dependencies = "required-after:crafttweaker@[1.12-4.1.8.470,];" +
+                "after:gamestages@[2.0.97,];after:galacticraftplanets@[4.0.1.181,];after:mekanism@[1.12.2-9.4.13.349,]"
 )
 public class SevTweaks {
 
@@ -31,6 +33,9 @@ public class SevTweaks {
         MinecraftForge.EVENT_BUS.register(CanceledEvents.class);
         if (Loader.isModLoaded("gamestages")) {
             MinecraftForge.EVENT_BUS.register(GameStageScoreboard.class);
+            if (Loader.isModLoaded("pneumaticcraft")) {
+                MinecraftForge.EVENT_BUS.register(PNCDroneStaging.class);
+            }
         }
     }
 

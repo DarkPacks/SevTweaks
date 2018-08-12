@@ -45,6 +45,8 @@ dependencies {
     deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:2.3.+"
     // BetterWithMods
     deobfCompile "betterwithmods:BetterWithMods:1.12-2.1.8-477"
+    // Pneumaticcraft Repressurized
+    deobfCompile "me.desht.pneumaticcraft:pneumaticcraft-repressurized:1.12.2-0.7.5-249"
 }
 
 repositories {
@@ -67,6 +69,14 @@ repositories {
     // MCMultiPart
     maven {
         url "http://maven.amadornes.com/"
+    }
+    // Pneumaticcraft Repressurized
+    maven {
+        url "https://modmaven.k-4u.nl/"
+    }
+    maven {
+        name = "Curseforge"
+        url = "https://minecraft.curseforge.com/api/maven/"
     }
 }
 
