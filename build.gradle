@@ -32,27 +32,27 @@ minecraft {
 
 dependencies {
     // CraftTweaker
-    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.8.476"
+    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.9.488"
     // Immersive Engineering
-    deobfCompile "blusunrize:ImmersiveEngineering:0.12-82-389:deobf"
+    deobfCompile "blusunrize:ImmersiveEngineering:0.12-85-454:deobf"
     // JEI
     deobfCompile "mezz.jei:jei_1.12.2:4.9.1.187"
     // Guide-API
     deobfCompile "info.amerifrance.guideapi:Guide-API:1.12-2.1.4-57"
     // GameStages
-    deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.+:deobf"
+    deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.0.103"
     // BookShelf
-    deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:2.3.+"
+    deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:2.3.557"
     // BetterWithMods
     deobfCompile "betterwithmods:BetterWithMods:1.12-2.1.8-477"
     // Pneumaticcraft Repressurized
-    deobfCompile "me.desht.pneumaticcraft:pneumaticcraft-repressurized:1.12.2-0.7.5-249"
+    deobfCompile "me.desht.pneumaticcraft:pneumaticcraft-repressurized:1.12.2-0.7.8-259"
 }
 
 repositories {
     // Immersive Engineering / CraftTweaker
     maven {
-        url 'http://blamejared.com/maven'
+        url 'https://maven.blamejared.com'
     }
     // JEI, Natura, Mantle, TiCon
     maven {
