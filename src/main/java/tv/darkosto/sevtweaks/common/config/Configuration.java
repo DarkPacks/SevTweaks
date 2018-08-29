@@ -13,6 +13,7 @@ public class Configuration {
     public static CanceledEvents canceledEvents = new CanceledEvents();
     public static ShearedCreeperItemShead creeperItemShead = new ShearedCreeperItemShead();
     public static GameStageScoreboard gamestageScoreboard = new GameStageScoreboard();
+    public static CrashData crashData = new CrashData();
 
     @SubscribeEvent
     public static void onConfigChangeEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
@@ -52,5 +53,15 @@ public class Configuration {
         @Config.Comment("The position for the scoreboard. Valid: 0 is tab menu, 1 is sidebar, 2 is below name.")
         @Config.Name("Scoreboard Position")
         public int scoreboardPosition = 2;
+    }
+
+    public static class CrashData {
+        @Config.Comment("The name of the modpack to use as the Crash Label")
+        @Config.Name("Modpack Name")
+        public String name = "SevTech: Ages";
+
+        @Config.Comment("The version of the modpack")
+        @Config.Name("Modpack Version")
+        public String version = "0.0.0";
     }
 }
