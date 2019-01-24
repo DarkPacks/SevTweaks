@@ -14,6 +14,7 @@ public class Configuration {
     public static ShearedCreeperItemShead creeperItemShead = new ShearedCreeperItemShead();
     public static GameStageScoreboard gamestageScoreboard = new GameStageScoreboard();
     public static CrashData crashData = new CrashData();
+    public static Debuggers debuggers = new Debuggers();
 
     @SubscribeEvent
     public static void onConfigChangeEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
@@ -63,5 +64,12 @@ public class Configuration {
         @Config.Comment("The version of the modpack")
         @Config.Name("Modpack Version")
         public String version = "0.0.0";
+    }
+
+    public static class Debuggers {
+        @Config.Comment("Create a biomes.md file displaying each biome's name, registry name, and ID")
+        @Config.Name("Create Biome Table File")
+        @Config.RequiresMcRestart
+        public boolean createBiomeFile = false;
     }
 }

@@ -12,10 +12,12 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Logger;
 import tv.darkosto.sevtweaks.common.command.CommandSevTweaks;
 import tv.darkosto.sevtweaks.common.compat.Compat;
+import tv.darkosto.sevtweaks.common.config.Configuration;
 import tv.darkosto.sevtweaks.common.crash.PackCrashEnhancement;
 import tv.darkosto.sevtweaks.common.events.CanceledEvents;
 import tv.darkosto.sevtweaks.common.gamestages.GameStageScoreboard;
 import tv.darkosto.sevtweaks.common.gamestages.PNCDroneStaging;
+import tv.darkosto.sevtweaks.common.util.BiomeDebugTable;
 import tv.darkosto.sevtweaks.common.util.References;
 
 @Mod(modid = References.modID, name = References.modName, version = References.modVersion,
@@ -51,6 +53,10 @@ public class SevTweaks {
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         Compat.compactPostInit();
+
+        if (Configuration.debuggers.createBiomeFile) {
+            BiomeDebugTable.createFile();
+        }
     }
 
     @EventHandler

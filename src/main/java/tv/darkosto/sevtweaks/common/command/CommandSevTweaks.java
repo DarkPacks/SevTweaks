@@ -7,6 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import tv.darkosto.sevtweaks.SevTweaks;
+import tv.darkosto.sevtweaks.common.util.BiomeDebugTable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -16,11 +17,15 @@ import java.util.List;
 
 public class CommandSevTweaks extends CommandBase {
     private static final String[] COMMANDS = new String[]{
+            "debugger",
             "gamestage"
     };
     private static final String[] GSCOMMANDS = new String[]{
             "init",
             "sync"
+    };
+    private static final String[] DEBUGGER_COMMANDS = new String[]{
+            "biomes"
     };
 
     @Override
@@ -49,6 +54,8 @@ public class CommandSevTweaks extends CommandBase {
             String identifier = args[0].toLowerCase();
             if (identifier.equals("gamestage")) {
                 return getListOfStringsMatchingLastWord(args, GSCOMMANDS);
+            } else if (identifier.equals("debugger")) {
+                return getListOfStringsMatchingLastWord(args, DEBUGGER_COMMANDS);
             }
         }
 
@@ -81,6 +88,16 @@ public class CommandSevTweaks extends CommandBase {
                     case "sync":
                         SevTweaks.scoreboard.syncPlayers(server);
                         sender.sendMessage(new TextComponentTranslation("command.sevtweaks.gssync.success"));
+                        return;
+                }
+            case "debugger":
+                switch (subIdentifier.toLowerCase()) {
+                    case "biomes":
+                        if (BiomeDebugTable.createFile()) {
+                            sender.sendMessage(new TextComponentTranslation("command.sevtweaks.debugger.biomes.success"));
+                            return;
+                        }
+                        sender.sendMessage(new TextComponentTranslation("command.sevtweaks.debugger.biomes.failed"));
                         return;
                 }
             default:
