@@ -138,12 +138,12 @@ public class Configuration {
         @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the Drought ceremony")
         @Config.Name("Drought Startup Time")
         @Config.RequiresMcRestart
-        public int droughtStartTime = 28;
+        public int droughtStartTime = 26;
     
         @Config.Comment("The amount of music required for the player to start the Drought ceremony")
         @Config.Name("Drought Music")
         @Config.RequiresMcRestart
-        public int droughtMusic = 189;
+        public int droughtMusic = 183;
     
         @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the Serenade for Syrinx ceremony")
         @Config.Name("Flute Startup Time")
@@ -195,8 +195,8 @@ public class Configuration {
         @Config.RequiresMcRestart
         public int sunDanceMusic = 247;
     
-        @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the War Dance ceremony")
-        @Config.Name("War Dance Startup Time")
+        @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the Danse Macabre ceremony")
+        @Config.Name("Danse Macabre Startup Time")
         @Config.RequiresMcRestart
         public int danseMacabreStartTime = 32;
     

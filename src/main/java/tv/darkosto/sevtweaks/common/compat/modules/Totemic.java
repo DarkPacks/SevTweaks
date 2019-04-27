@@ -54,7 +54,7 @@ public class Totemic extends ICompat {
                         Configuration.ceremonies.sunDanceMusic, Configuration.ceremonies.sunDanceStartTime * 20,
                         ModContent.drum, ModContent.eagleBoneWhistle).setRegistryName(pokefenn.totemic.Totemic.MOD_ID, "sun_dance"),
                 ModContent.danseMacabre = new CeremonyDanseMacabre("totemic:danseMacabre",
-                        Configuration.ceremonies.danseMacabreMusic, Configuration.ceremonies.sunDanceStartTime * 20,
+                        Configuration.ceremonies.danseMacabreMusic, Configuration.ceremonies.danseMacabreStartTime * 20,
                         ModContent.eagleBoneWhistle, ModContent.windChime).setRegistryName(pokefenn.totemic.Totemic.MOD_ID, "danseMacabre"));
     }
     
