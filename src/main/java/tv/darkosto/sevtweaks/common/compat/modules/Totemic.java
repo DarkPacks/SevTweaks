@@ -18,7 +18,7 @@ public class Totemic extends ICompat {
         IForgeRegistry<Ceremony> ceremonyRegistry = GameRegistry.findRegistry(Ceremony.class);
         ceremonyRegistry.registerAll(
                 ModContent.warDance = new CeremonyWarDance("totemic:warDance",
-                        Configuration.ceremonies.warDanceMusic, Configuration.ceremonies.warDanceMusic * 20,
+                        Configuration.ceremonies.warDanceMusic, Configuration.ceremonies.warDanceStartTime * 20,
                         ModContent.drum, ModContent.drum).setRegistryName(pokefenn.totemic.Totemic.MOD_ID, "war_dance"),
                 ModContent.depths = new CeremonyDepths("totemic:depths",
                         Configuration.ceremonies.depthsMusic, Configuration.ceremonies.depthsStartTime * 20,
