@@ -28,6 +28,13 @@ minecraft {
 	
 	replaceIn "References.java"
     replace "@VERSION@", project.version
+
+    def args = [
+            '-Dfml.coreMods.load=tv.darkosto.sevtweaks.core.SevTweaksLoadingPlugin'
+    ]
+
+    clientJvmArgs.addAll(args)
+    serverJvmArgs.addAll(args)
 }
 
 dependencies {
@@ -78,6 +85,13 @@ repositories {
         name = "Curseforge"
         url = "https://minecraft.curseforge.com/api/maven/"
     }
+}
+
+jar {
+    manifest.attributes(
+            "FMLCorePluginContainsFMLMod": "true",
+            "FMLCorePlugin": "tv.darkosto.sevtweaks.core.SevTweaksLoadingPlugin",
+    )
 }
 
 processResources {
