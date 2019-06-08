@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.Logger;
 import tv.darkosto.sevtweaks.common.command.CommandSevTweaks;
+import tv.darkosto.sevtweaks.common.command.CommandWaypoints;
 import tv.darkosto.sevtweaks.common.compat.Compat;
 import tv.darkosto.sevtweaks.common.config.Configuration;
 import tv.darkosto.sevtweaks.common.crash.PackCrashEnhancement;
@@ -19,6 +20,7 @@ import tv.darkosto.sevtweaks.common.gamestages.GameStageScoreboard;
 import tv.darkosto.sevtweaks.common.gamestages.PNCDroneStaging;
 import tv.darkosto.sevtweaks.common.util.BiomeDebugTable;
 import tv.darkosto.sevtweaks.common.util.References;
+import tv.darkosto.sevtweaks.network.SevTweaksPacketHandler;
 
 @Mod(modid = References.modID, name = References.modName, version = References.modVersion,
         acceptedMinecraftVersions = References.mcVersion,
@@ -34,6 +36,8 @@ public class SevTweaks {
     public void preInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
         FMLCommonHandler.instance().registerCrashCallable(new PackCrashEnhancement());
+    
+        SevTweaksPacketHandler.init();
 
         Compat.compactPreInit();
         MinecraftForge.EVENT_BUS.register(CanceledEvents.class);
@@ -62,5 +66,8 @@ public class SevTweaks {
     @EventHandler
     public void onServerStart(FMLServerStartingEvent event) {
         event.registerServerCommand(new CommandSevTweaks());
+        if (Loader.isModLoaded("antiqueatlas") && Loader.isModLoaded("journeymap")) {
+            event.registerServerCommand(new CommandWaypoints());
+        }
     }
 }

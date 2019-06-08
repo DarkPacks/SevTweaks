@@ -23,6 +23,7 @@ public class Compat {
         compatModules.put("rustic", Rustic.class);
         compatModules.put("betterwithmods", BetterWithMods.class);
         compatModules.put("galacticraftplanets", GalacticraftPlanets.class);
+        compatModules.put("antiqueatlas", AaToJmWaypoints.class);
     }
 
     public static void compactPreInit() {
