@@ -77,13 +77,13 @@ public class AaToJmWaypoints extends ICompat {
      */
     @SideOnly(Side.CLIENT)
     public static void doSync(Collection<Marker> markers) {
-        SevTweaks.logger.info("{} from Antique Atlas are being imported into Journeymap", markers.size());
+        SevTweaks.logger.info("{} markers from Antique Atlas are being imported into JourneyMap", markers.size());
         
         Random random = new Random();
         
         for (Marker marker : markers) {
             WaypointStore.INSTANCE.add(new Waypoint(
-                    marker.getLabel(),
+                    marker.getLocalizedLabel(),
                     new BlockPos(marker.getX(), 70, marker.getZ()),
                     marker.getType().equals("antiqueatlas:nether_portal") ? new Color(134, 0, 175) : new Color(random.nextFloat(), random.nextFloat(), random.nextFloat()),
                     marker.getType().equals("antiqueatlas:tomb") ? Waypoint.Type.Death : Waypoint.Type.Normal,

@@ -47,6 +47,7 @@ dependencies {
     deobfCompile "betterwithmods:BetterWithMods:1.12-2.1.8-477"
     // Pneumaticcraft Repressurized
     deobfCompile "me.desht.pneumaticcraft:pneumaticcraft-repressurized:1.12.2-0.7.8-259"
+    // Mapping mods
     deobfCompile "antique-atlas:antiqueatlas:1.12.2:4.5.1"
     deobfCompile "journeymap:journeymap:1.12.2:5.5.4"
     deobfCompile "journeymapstages:JourneyMapStages:1.12.2:2.0.9"
