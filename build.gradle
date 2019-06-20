@@ -34,7 +34,7 @@ dependencies {
     // CraftTweaker
     deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.9.488"
     // Immersive Engineering
-    deobfCompile "blusunrize:ImmersiveEngineering:0.12-85-454:deobf"
+    deobfCompile "blusunrize:ImmersiveEngineering:0.12-85-454"
     // JEI
     deobfCompile "mezz.jei:jei_1.12.2:4.9.1.187"
     // Guide-API
@@ -51,6 +51,8 @@ dependencies {
     deobfCompile "antique-atlas:antiqueatlas:1.12.2:4.5.1"
     deobfCompile "journeymap:journeymap:1.12.2:5.5.4"
     deobfCompile "journeymapstages:JourneyMapStages:1.12.2:2.0.9"
+    // Totemic
+    deobfCompile "totemic:Totemic:1.12.2:0.11.6"
 }
 
 repositories {

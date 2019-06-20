@@ -24,6 +24,7 @@ public class Compat {
         compatModules.put("betterwithmods", BetterWithMods.class);
         compatModules.put("galacticraftplanets", GalacticraftPlanets.class);
         compatModules.put("antiqueatlas", AaToJmWaypoints.class);
+        compatModules.put("totemic", Totemic.class);
     }
 
     public static void compactPreInit() {
@@ -45,7 +46,7 @@ public class Compat {
             try {
                 compat.init();
             } catch (Exception el) {
-                SevTweaks.logger.error("Compat module for " + compat + " could not be initialized.");
+                SevTweaks.logger.error("Compat module for " + compat + " could not be initialized.", el);
             }
         }
     }
