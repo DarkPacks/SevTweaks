@@ -88,7 +88,7 @@ public class AaToJmWaypoints extends ICompat {
                     marker.getType().equals("antiqueatlas:nether_portal") ? new Color(134, 0, 175) : new Color(random.nextFloat(), random.nextFloat(), random.nextFloat()),
                     marker.getType().equals("antiqueatlas:tomb") ? Waypoint.Type.Death : Waypoint.Type.Normal,
                     marker.getDimension()
-            ));
+            ).setDirty());
         }
         WaypointStore.INSTANCE.bulkSave();
     }
