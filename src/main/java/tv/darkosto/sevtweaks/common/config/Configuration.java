@@ -15,6 +15,7 @@ public class Configuration {
     public static GameStageScoreboard gamestageScoreboard = new GameStageScoreboard();
     public static CrashData crashData = new CrashData();
     public static Debuggers debuggers = new Debuggers();
+    public static TotemicCeremonies ceremonies = new TotemicCeremonies();
 
     @SubscribeEvent
     public static void onConfigChangeEvent(ConfigChangedEvent.OnConfigChangedEvent event) {
@@ -71,5 +72,150 @@ public class Configuration {
         @Config.Name("Create Biome Table File")
         @Config.RequiresMcRestart
         public boolean createBiomeFile = false;
+    }
+    
+    public static class TotemicCeremonies {
+        @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the War Dance ceremony")
+        @Config.Name("War Dance Startup Time")
+        @Config.RequiresMcRestart
+        public int warDanceStartTime = 20;
+        
+        @Config.Comment("The amount of music required for the player to start the War Dance ceremony")
+        @Config.Name("War Dance Music")
+        @Config.RequiresMcRestart
+        @Config.RangeInt(min = 0, max = 270)
+        public int warDanceMusic = 75;
+    
+        @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the Symphony of the Depths ceremony")
+        @Config.Name("Depths Startup Time")
+        @Config.RequiresMcRestart
+        public int depthsStartTime = 20;
+    
+        @Config.Comment("The amount of music required for the player to start the Symphony of the Depths ceremony")
+        @Config.Name("Depths Music")
+        @Config.RequiresMcRestart
+        @Config.RangeInt(min = 0, max = 270)
+        public int depthsMusic = 75;
+    
+        @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the Rite of Spring ceremony")
+        @Config.Name("Fertility Startup Time")
+        @Config.RequiresMcRestart
+        public int fertilityStartTime = 23;
+    
+        @Config.Comment("The amount of music required for the player to start the Rite of Spring ceremony")
+        @Config.Name("Fertility Music")
+        @Config.RequiresMcRestart
+        @Config.RangeInt(min = 0, max = 270)
+        public int fertilityMusic = 88;
+    
+        @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the Zaphkiel Waltz ceremony")
+        @Config.Name("Zaphkiel Waltz Startup Time")
+        @Config.RequiresMcRestart
+        public int zaphkielWaltzStartTime = 20;
+    
+        @Config.Comment("The amount of music required for the player to start the Zaphkiel Waltz ceremony")
+        @Config.Name("Zaphkiel Waltz Music")
+        @Config.RequiresMcRestart
+        @Config.RangeInt(min = 0, max = 270)
+        public int zaphkielWaltzMusic = 112;
+    
+        @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the Buffalo Dance ceremony")
+        @Config.Name("Buffalo Dance Startup Time")
+        @Config.RequiresMcRestart
+        public int buffaloDanceStartTime = 24;
+    
+        @Config.Comment("The amount of music required for the player to start the Buffalo Dance ceremony")
+        @Config.Name("Buffalo Dance Music")
+        @Config.RequiresMcRestart
+        @Config.RangeInt(min = 0, max = 270)
+        public int buffaloDanceDanceMusic = 123;
+    
+        @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the Rain Dance ceremony")
+        @Config.Name("Rain Dance Startup Time")
+        @Config.RequiresMcRestart
+        public int rainDanceStartTime = 26;
+    
+        @Config.Comment("The amount of music required for the player to start the Rain Dance ceremony")
+        @Config.Name("Rain Dance Music")
+        @Config.RequiresMcRestart
+        @Config.RangeInt(min = 0, max = 270)
+        public int rainDanceMusic = 183;
+        
+        @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the Drought ceremony")
+        @Config.Name("Drought Startup Time")
+        @Config.RequiresMcRestart
+        public int droughtStartTime = 26;
+    
+        @Config.Comment("The amount of music required for the player to start the Drought ceremony")
+        @Config.Name("Drought Music")
+        @Config.RequiresMcRestart
+        @Config.RangeInt(min = 0, max = 270)
+        public int droughtMusic = 183;
+    
+        @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the Serenade for Syrinx ceremony")
+        @Config.Name("Flute Startup Time")
+        @Config.RequiresMcRestart
+        public int fluteStartTime = 28;
+    
+        @Config.Comment("The amount of music required for the player to start the Serenade for Syrinx ceremony")
+        @Config.Name("Flute Music")
+        @Config.RequiresMcRestart
+        @Config.RangeInt(min = 0, max = 270)
+        public int fluteMusic = 189;
+    
+        @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the Eagle Dance ceremony")
+        @Config.Name("Eagle Dance Startup Time")
+        @Config.RequiresMcRestart
+        public int eagleDanceStartTime = 25;
+    
+        @Config.Comment("The amount of music required for the player to start the Eagle Dance ceremony")
+        @Config.Name("Eagle Dance Music")
+        @Config.RequiresMcRestart
+        @Config.RangeInt(min = 0, max = 270)
+        public int eagleDanceMusic = 193;
+    
+        @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the Steve's Lullaby ceremony")
+        @Config.Name("Cleansing Startup Time")
+        @Config.RequiresMcRestart
+        public int cleansingStartTime = 30;
+    
+        @Config.Comment("The amount of music required for the player to start the Steve's Lullaby ceremony")
+        @Config.Name("Cleansing Music")
+        @Config.RequiresMcRestart
+        @Config.RangeInt(min = 0, max = 270)
+        public int cleansingMusic = 245;
+    
+        @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the Totentanz ceremony")
+        @Config.Name("Baykok Summoning Startup Time")
+        @Config.RequiresMcRestart
+        public int baykokSummonStartTime = 32;
+    
+        @Config.Comment("The amount of music required for the player to start the Totentanz ceremony")
+        @Config.Name("Baykok Summoning Music")
+        @Config.RequiresMcRestart
+        @Config.RangeInt(min = 0, max = 270)
+        public int baykokSummonMusic = 251;
+    
+        @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the Sun Dance ceremony")
+        @Config.Name("Sun Dance Startup Time")
+        @Config.RequiresMcRestart
+        public int sunDanceStartTime = 31;
+    
+        @Config.Comment("The amount of music required for the player to start the Sun Dance ceremony")
+        @Config.Name("Sun Dance Music")
+        @Config.RequiresMcRestart
+        @Config.RangeInt(min = 0, max = 270)
+        public int sunDanceMusic = 247;
+    
+        @Config.Comment("The time allowed (in seconds) for the player to accumulate enough music to start the Danse Macabre ceremony")
+        @Config.Name("Danse Macabre Startup Time")
+        @Config.RequiresMcRestart
+        public int danseMacabreStartTime = 32;
+    
+        @Config.Comment("The amount of music required for the player to start the Danse Macabre ceremony")
+        @Config.Name("Danse Macabre Music")
+        @Config.RequiresMcRestart
+        @Config.RangeInt(min = 0, max = 270)
+        public int danseMacabreMusic = 249;
     }
 }
