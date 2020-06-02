@@ -25,6 +25,7 @@ public class Compat {
         compatModules.put("galacticraftplanets", GalacticraftPlanets.class);
         compatModules.put("antiqueatlas", AaToJmWaypoints.class);
         compatModules.put("totemic", Totemic.class);
+        compatModules.put("thebetweenlands", TheBetweenlandsCompat.class);
     }
 
     public static void compactPreInit() {
