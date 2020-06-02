@@ -16,8 +16,6 @@ import java.util.Random;
 import java.util.Set;
 
 public class Topography extends ICompat {
-    private int baseDruidFrequency;
-
     @Override
     public void preInit() {
     }
