@@ -58,6 +58,8 @@ dependencies {
     deobfCompile "totemic:Totemic:1.12.2:0.11.6"
     // The Betweenlands
     deobfCompile "curse.maven:angry-pixel-the-betweenlands-mod:2766910"
+    // Abyssalcraft
+    deobfCompile "curse.maven:abyssalcraft:2956823"
 }
 
 repositories {

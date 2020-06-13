@@ -15,6 +15,7 @@ public class Configuration {
     public static GameStageScoreboard gamestageScoreboard = new GameStageScoreboard();
     public static CrashData crashData = new CrashData();
     public static Debuggers debuggers = new Debuggers();
+    public static WorldGen worldGen = new WorldGen();
     public static TotemicCeremonies ceremonies = new TotemicCeremonies();
 
     @SubscribeEvent
@@ -72,6 +73,13 @@ public class Configuration {
         @Config.Name("Create Biome Table File")
         @Config.RequiresMcRestart
         public boolean createBiomeFile = false;
+    }
+
+    public static class WorldGen {
+        @Config.Comment("Generation chance of a Shoggoth Lair in ocean biomes. Higher numbers decrease the chance of a Lair generating, while lower numbers increase the chance. 0 disables.")
+        @Config.Name("Shoggoth Lair Generation Chance: Oceans")
+        @Config.RangeInt(min = 0, max = 1000)
+        public int shoggothOceanSpawnRate = 3;
     }
     
     public static class TotemicCeremonies {
