@@ -1,5 +1,6 @@
 package tv.darkosto.sevtweaks.common.compat.modules;
 
+import com.google.common.collect.EvictingQueue;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
@@ -31,7 +32,7 @@ public class Topography extends ICompat {
     }
 
     static class WorldGenDruidCircleAlt extends WorldGenDruidCircle {
-        private Set<Long> circleLocations = new HashSet<>();
+        final EvictingQueue<BlockPos> circlePositions = EvictingQueue.create(30);
 
         @Override
         public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
@@ -48,10 +49,9 @@ public class Topography extends ICompat {
 
         @Override
         public void generateStructure(World world, Random rand, BlockPos altar) {
-            long hashedPos = (long) altar.getX() >> 7 | (long) altar.getZ() >> 7 << 32;
-            if (!circleLocations.contains(hashedPos)) {
+            if (!circlePositions.stream().anyMatch(pos1 -> pos1.distanceSq(altar) < 16384)) {
                 super.generateStructure(world, rand, altar);
-                circleLocations.add(hashedPos);
+                circlePositions.add(altar);
             }
         }
     }
