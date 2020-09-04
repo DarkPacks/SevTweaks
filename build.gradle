@@ -48,7 +48,7 @@ dependencies {
     // JEI
     deobfCompile "mezz.jei:jei_1.12.2:4.9.1.187"
     // Guide-API
-    deobfCompile "info.amerifrance.guideapi:Guide-API:1.12-2.1.8-63"
+    deobfCompile "curse.maven:guide-api:2645992"
     // GameStages
     deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.0.115"
     // BookShelf
@@ -77,10 +77,6 @@ repositories {
     // JEI, Natura, Mantle, TiCon
     maven {
         url 'https://dvs1.progwml6.com/files/maven'
-    }
-    // Guide-API
-    maven {
-        url 'https://tehnut.info/maven'
     }
     // GameStages, ItemStages, DimensionStages, MobStages, TinkerStages
     maven {
