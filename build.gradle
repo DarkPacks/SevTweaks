@@ -7,6 +7,9 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
+plugins {
+    id "com.wynprice.cursemaven" version "2.1.4"
+}
 apply plugin: 'net.minecraftforge.gradle.forge'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
@@ -38,11 +41,11 @@ dependencies {
     // JEI
     deobfCompile "mezz.jei:jei_1.12.2:4.9.1.187"
     // Guide-API
-    deobfCompile "info.amerifrance.guideapi:Guide-API:1.12-2.1.4-57"
+    deobfCompile "info.amerifrance.guideapi:Guide-API:1.12-2.1.8-63"
     // GameStages
-    deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.0.103"
+    deobfCompile "net.darkhax.gamestages:GameStages-1.12.2:2.0.115"
     // BookShelf
-    deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:2.3.557"
+    deobfCompile "net.darkhax.bookshelf:Bookshelf-1.12.2:2.3.577"
     // BetterWithMods
     deobfCompile "betterwithmods:BetterWithMods:1.12-2.1.8-477"
     // Pneumaticcraft Repressurized
@@ -53,6 +56,10 @@ dependencies {
     deobfCompile "journeymapstages:JourneyMapStages:1.12.2:2.0.9"
     // Totemic
     deobfCompile "totemic:Totemic:1.12.2:0.11.6"
+    // The Betweenlands
+    deobfCompile "curse.maven:angry-pixel-the-betweenlands-mod:2766910"
+    // Abyssalcraft
+    deobfCompile "curse.maven:abyssalcraft:2956823"
 }
 
 repositories {
@@ -62,11 +69,11 @@ repositories {
     }
     // JEI, Natura, Mantle, TiCon
     maven {
-        url 'http://dvs1.progwml6.com/files/maven'
+        url 'https://dvs1.progwml6.com/files/maven'
     }
     // Guide-API
     maven {
-        url 'http://tehnut.info/maven'
+        url 'https://tehnut.info/maven'
     }
     // GameStages, ItemStages, DimensionStages, MobStages, TinkerStages
     maven {
