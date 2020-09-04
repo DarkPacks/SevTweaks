@@ -13,8 +13,15 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle.forge'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
+def buildnumber = null
+
+if (System.getenv('GITHUB_ACTIONS'))
+    buildnumber = System.getenv('GITHUB_WORKFLOW') == 'Release' ? System.getenv('GITHUB_RUN_NUMBER') : System.getenv('GITHUB_SHA').substring(0, 7)
+
+def suffix = buildnumber != null ? buildnumber : 'SNAPSHOT'
+
 ext.artifact_version = 'NFG'
-artifact_version = "${mod_version}-${System.getenv().BUILD_NUMBER}"
+artifact_version = "${mod_version}-${suffix}"
 version = "${artifact_version}"
 group= "tv.darkosto.sevtweaks"
 archivesBaseName = "sevtweaks"
